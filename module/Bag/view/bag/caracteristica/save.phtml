@@ -1,0 +1,74 @@
+<?php
+$form = $this->form;
+$form->get('descricao')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Digite a descrição aqui'
+]);
+
+$form->get('nomeCurto')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Digite o nome curto aqui'
+]);
+
+$form->get('ordem')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Digite a ordem aqui'
+]);
+
+
+$form->get('submit')->setAttributes([
+    'class' => 'btn btn-primary'
+]);
+?>
+
+<h1>Cadastro de característica</h1>
+
+<div class="row">
+    <div class="col-md-22">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">
+                    Por favor, preencha o formulário abaixo e, em seguida, clique sobre o botão <i>Salvar</i>. <a
+                        class="btn btn-secondary btn-sm pull-right"
+                        href="/bag/caracteristica" title="Fechar"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <?php echo $this->form()->openTag($form); ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($form->get('descricao')); ?><br>
+                        <?php echo $this->formElement($form->get('descricao')); ?>
+                        <?php echo $this->formElementErrors($form->get('descricao')); ?>                  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('nomeCurto')); ?><br>
+                        <?php echo $this->formElement($form->get('nomeCurto')); ?>
+                        <?php echo $this->formElementErrors($form->get('nomeCurto')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('ordem')); ?><br>
+                        <?php echo $this->formElement($form->get('ordem')); ?>
+                        <?php echo $this->formElementErrors($form->get('ordem')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('rotina')); ?><br>
+                        <?php echo $this->formElement($form->get('rotina')); ?>
+                        <?php echo $this->formElementErrors($form->get('rotina')); ?>                  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formElement($form->get('submit')); ?>
+                        <?php echo $this->form()->closeTag(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

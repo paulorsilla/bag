@@ -1,0 +1,41 @@
+<?php echo $this->form()->openTag($this->form); ?>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="panel-title">
+            Por favor, preencha o formulário abaixo e, em seguida, clique sobre
+            o botão <i>Salvar</i>. 
+        </h3>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('material')); ?><br>
+                <?php echo $this->formElement($form->get('material')); ?>
+                <?php echo $this->formElementErrors($form->get('material')); ?>                  
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <?php echo $this->formLabel($form->get('quantidadeAtual')); ?><br>
+                <?php echo $this->formElement($form->get('quantidadeAtual')); ?>
+            </div>
+            <div class="col-md-4">
+                <?php echo $this->formLabel($form->get('quantidadeSolicitada')); ?><br>
+                <?php echo $this->formElement($form->get('quantidadeSolicitada')); ?>
+                <?php echo $this->formElementErrors($form->get('quantidadeSolicitada')); ?>                  
+            </div>
+            <div class="col-md-4">
+                <?php echo $this->formLabel($form->get('quantidadeAtendida')); ?><br>
+                <?php echo $this->formElement($form->get('quantidadeAtendida')); ?>
+                <?php echo $this->formElementErrors($form->get('quantidadeAtendida')); ?>                  
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?php echo $this->formLabel($form->get('observacao')); ?><br>
+                <?php echo $this->formElement($form->get('observacao')); ?>
+                <?php echo $this->formElementErrors($form->get('observacao')); ?>                  
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->form()->closeTag(); ?>

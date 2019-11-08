@@ -1,0 +1,95 @@
+<?php
+    $this->headScript()->appendFile('/js/inputmask.js', 'text/javascript');
+    $this->headScript()->appendFile('/js/jquery.inputmask.js', 'text/javascript');
+    $this->headScript()->appendFile('/js/material-save.js', 'text/javascript');
+    $form = $this->form;
+?>
+
+<h1>Materiais cadastrados</h1>
+<form action="/bag/material/index" method="get">
+    <div class="row">
+        <div class="col-md-2">
+            <input type="text" class="small" name="cgs" id="cgs" placeHolder="CGS" value="<?php echo (!empty($this->search['cgs'])) ? $this->search['cgs'] : "";?>">
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="small" name="acesso" id="acesso" placeHolder="Acesso" value="<?php echo (!empty($this->search['acesso'])) ? $this->search['acesso'] : "";?>">
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="small" name="origem" id="origem" placeHolder="Origem" value="<?php echo (!empty($this->search['origem'])) ? $this->search['origem'] : "";?>">
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="small" name="localizacao" id="localizacao" placeHolder="Localização" value="<?php echo (!empty($this->search['localizacao'])) ? $this->search['localizacao'] : "";?>">
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="small" name="sinonimia" id="sinonimia" placeHolder="Sinonimia" value="<?php echo (!empty($this->search['sinonimia'])) ? $this->search['sinonimia'] : "";?>">
+        </div>
+        <div class="col-md-1 text-right">
+            <button class="btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+        </div>
+    </div>
+</form>
+<hr>
+<div class="row">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th style="font-size: 13px;">CGS</th>
+                <th style="font-size: 13px;">Acesso</th>
+                <th style="font-size: 13px;">Subcollection</th>
+                <th style="font-size: 13px;">Origem</th>
+                <th style="font-size: 13px;">Localização</th>
+                <th style="font-size: 13px; text-align: right">Nº sementes</th>
+                <th style="font-size: 13px;">Sinonimia</th>
+                <th style="font-size: 13px;">Observação</th>
+                <th style="font-size: 13px;">Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->materiais as $material):
+                if ((null != $material->getBag()) && $material->getBag()->getPesoTotal() > 0 && $material->getBag()->getPesoSem()) {
+                    $numeroSementes = $material->getBag()->getPesoTotal() * 100 / $material->getBag()->getPesoSem();
+                } else {
+                    $numeroSementes = 0;
+                }
+                ?>
+                <tr>
+                    <td style="font-size: 13px;"><?php echo $this->escapeHtml($material->getCgs()); ?></td>
+                    <td style="font-size: 13px;"><?php echo $this->escapeHtml($material->getAcesso()); ?></td>
+                    <td style="font-size: 13px;"><?php echo (null != $material->getEspecie()) ? $this->escapeHtml($material->getEspecie()->getGenero()->getDescricao()." ".$material->getEspecie()->getDescricao()): ""; ?></td>
+                    <td style="font-size: 13px;"><?php echo (null != $material->getPassaporte() ? $this->escapeHtml($material->getPassaporte()->getOrigem()) : ""); ?></td>
+                    <td style="font-size: 13px;"><?php echo (null != $material->getBag() ? $this->escapeHtml($material->getBag()->getLocalizacao()->getLocalizacao()) : ""); ?></td>
+                    <td style="font-size: 13px; text-align: right"><?php echo number_format($numeroSementes, 2,',','.'); ?></td>
+                    <td style="font-size: 13px;"><?php echo (null != $material->getPassaporte() ? $this->escapeHtml($material->getPassaporte()->getSinonimias()) : ""); ?></td>
+                    <td style="font-size: 13px;"><?php echo $this->escapeHtml($material->getObservacao()); ?></td>
+                    <td style="font-size: 13px;"><a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/material', ['action' => 'save', 'id' => $material->getId()]) ?>"
+                           title="Editar registro."><span class="glyphicon glyphicon-pencil"></span></a>
+<!--                        <a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/material', ['action' => 'delete', 'id' => $material->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>-->
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?php echo $this->paginationControl($this->materiais, 'Jumping', 'bag/partial/paginator', ['route' => 'bag/material']); ?>
+    </span>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <a class="btn btn-primary pull-left" href="/bag/material/save">Novo registro</a>
+    </div>
+    <div class="col-md-5">
+        <a class="btn btn-primary pull-left" href="/bag/material/cgsdisponiveis"><span class="glyphicon glyphicon-search"></span> CGS e localizações disponíveis</a>
+        <a class="btn btn-primary pull-right" href="/bag/material/inconsistencias"><span class="glyphicon glyphicon-search"></span> Inconsistências no BAG</a>
+    </div>
+    <div class="col-md-2">
+        <a class="btn btn-primary pull-right" href="/bag/material/exportarcsv"><span class="glyphicon glyphicon-export"></span> Exportar Bag (csv)</a>
+    </div>
+</div>
+
+<script type='text/javascript'>
+    $('#cgs').focus();
+</script>
+    

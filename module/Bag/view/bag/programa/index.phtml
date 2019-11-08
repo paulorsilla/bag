@@ -1,0 +1,34 @@
+<h1>Programas cadastrado</h1>
+<div class="row">
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Programa</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->programas as $programa): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($programa->getDescricao()); ?></td>
+                    <td><a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/programa', ['action' => 'save', 'id' => $programa->getId()]) ?>"
+                           title="Editar registro."><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/programa', ['action' => 'delete', 'id' => $programa->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?= $this->paginationControl($this->programas, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/programa']); ?>
+    </span>
+</div>
+
+<div class="row">
+    <a class="btn btn-primary pull-left" href="/bag/programa/save">Novo registro</a>
+</div>
+

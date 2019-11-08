@@ -1,0 +1,35 @@
+<h1>Importações cadastrados</h1>
+<div class="row">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Nome do arquivo</th>
+                <th>Data</th>
+                <th>Sobrescrever</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->importacoes as $importacao): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($importacao->getNomeArquivo()); ?></td>
+                    <td><?php echo $this->escapeHtml($importacao->getDataImportacao()->format("d/m/Y")); ?></td>
+                    <td><?php echo $this->escapeHtml(($importacao->getSobrescerver()) ? "Sim":"Não"); ?></td>
+                    <td>
+                        <a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/importacao-caderneta', ['action' => 'delete', 'id' => $importacao->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?php echo $this->paginationControl($this->importacoes, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/importacao-caderneta']); ?>
+    </span>
+</div>
+
+<div class="row">
+    <a class="btn btn-primary pull-left" href="/bag/importacao-caderneta/save">Novo registro</a>
+</div>
+

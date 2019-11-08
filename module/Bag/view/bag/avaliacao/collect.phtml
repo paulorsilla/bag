@@ -1,0 +1,121 @@
+<?php 
+    $caracteristicas = [];
+    foreach($this->coleta->getCaracteristicas() as $k => $caracteristica) {
+        $caracteristicas[$k] = $caracteristica->getId();
+    }
+?>
+
+<hr>
+<?php 
+    $cabecalho = '<div class="col-xs-2"><span class="label label-primary">'
+               . 'Estaca</span></div><div class="col-xs-2"><span class="label '
+               . 'label-primary">Acesso</span></div>';
+
+    foreach($this->coleta->getCaracteristicas() as $caracteristica) {
+        $cabecalho .= '<div class="col-xs-2 text-center"><span class="label label-primary">'.$caracteristica->getNomeCurto().'</span></div>';
+    }
+?>
+
+<div class="row">
+    <div class="col-xs-11">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">
+                    <a class="btn btn-secondary btn-sm pull-right"
+                       href="/bag/coleta/index/<?php echo $this->coleta->getRegeneracao()->getId();?>" title="Fechar"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </h3>
+                <div class="col-xs-3 small" id='estacaAtual'>
+                </div>
+                <div class="col-xs-3 small" id='acessoAtual'>
+                </div>
+                <div class="col-xs-5 small" id='caracteristicaAtual'>
+                </div>
+            </div>
+
+            <div class="panel-body"  style="height: 500px; overflow-y: scroll;">
+
+                <form action="/bag/coleta/collect/<?php echo $this->coleta->getId();?>" method="post">
+                <hr>
+                    <?php foreach($this->coleta->getRegeneracao()->getItens() as $k => $itemRegeneracao):
+                        
+                        $acesso = ($itemRegeneracao->getMaterial()) ? $itemRegeneracao->getMaterial()->getAcesso() : "*";
+                        ?>
+                        <div class="row" id="cabecalho_<?php echo $k;?>">
+                            <?php echo $cabecalho; ?>
+                        </div>
+                        <div class="row" id="linha_<?php echo $k?>">
+                            <div class="col-xs-2">
+                                <input type="hidden" id="itemEstaca_<?php echo $k;?>" value="<?php echo $itemRegeneracao->getEstaca();?>">
+                                <input type="hidden" id="itemAcesso_<?php echo $k;?>" value="<?php echo $acesso;?>">
+                                <?php echo $this->escapeHtml($itemRegeneracao->getEstaca());?>
+                            </div>
+                            <div class="col-xs-2">
+                                <?php echo $acesso;?>
+                            </div>
+                                <?php for($i=0; $i< count($caracteristicas);$i++):
+                                    $id = $this->itensColeta[$itemRegeneracao->getId().":".$caracteristicas[$i]]['id'];
+                                    $valor = $this->itensColeta[$itemRegeneracao->getId().":".$caracteristicas[$i]]['valor'];
+                                    $caracteristicaNomeCurto = $this->itensColeta[$itemRegeneracao->getId().":".$caracteristicas[$i]]['caracteristicaNomeCurto'];
+                                    $valorMaterialCaracteristica = $this->itensColeta[$itemRegeneracao->getId().":".$caracteristicas[$i]]['valorMaterialCaracteristica'];
+                                ?>
+                                <div class="col-xs-2">
+                                    <input type="text" id="itemValor_<?php echo $id;?>" name="itemValor_<?php echo $id;?>" style="width: 100%;" value="<?php echo $valor;?>">
+                                    <input type="hidden" id="caracteristicaNomeCurto_<?php echo $id;?>" value="<?php echo $caracteristicaNomeCurto;?>">
+                                    <input type="hidden" id="valorMaterialCaracteristica_<?php echo $id;?>" value="<?php echo $valorMaterialCaracteristica;?>">
+                                </div>
+                            <?php endfor;?>
+                        </div>
+                <hr>
+                    <?php endforeach;?>
+                <button id='btnSalvar' class='btn btn-primary' type='submit'>Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-11">* - Não existe cadastro no BAG para esse material.</div>
+</div>
+
+<script type="text/javascript">
+    $('#btnSalvar').hide();
+    $('div[id*="cabecalho_"]').hide();
+    $('div[id="cabecalho_0"]').show();
+    
+    $('input[name*="itemValor_"]').focusin(function() {
+        $('div[id*="cabecalho_"]').hide();
+        var id = $(this).closest('div.row').attr('id').split("_");
+        $("#cabecalho_"+id[1]).show();
+
+        var estaca = $('#itemEstaca_'+id[1]).val();
+        $("#estacaAtual").html("<h3>"+estaca+"</h3>");
+
+        var acesso = $('#itemAcesso_'+id[1]).val();
+        $("#acessoAtual").html("<h3>"+acesso+"</h3>");
+        
+        var idItem = $(this).attr('id').split("_"); 
+        
+        var nomeCurto = $('#caracteristicaNomeCurto_'+idItem[1]).val();
+        var valorMaterialCaracteristica = ":"+$('#valorMaterialCaracteristica_'+idItem[1]).val();
+        $("#caracteristicaAtual").html("<h3>"+nomeCurto+valorMaterialCaracteristica+"</h3>");
+    });
+
+    $('input[name*="itemValor_"]').change(function() {
+        var id = $(this).attr('id').split('_');
+        var valor = $(this).val();
+        
+        $.ajax({
+            url: '/bag/coleta/updateitem',
+            data: {
+                id:id[1],
+                valor:valor
+            },
+            type: 'post',
+            dataType: 'json',
+        });
+    });
+
+
+</script>

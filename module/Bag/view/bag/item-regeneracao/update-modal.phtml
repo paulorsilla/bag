@@ -1,0 +1,45 @@
+<input type="hidden" id="regeneracaoId" name="regeneracaoId" value="<?php echo $this->regeneracao->getId(); ?>">
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Estaca</th>
+            <th>CGS</th>
+            <th>Acesso</th>
+            <th>Origem</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->regeneracao->getItens() as $item): ?>
+            <tr>
+                <td><input type="checkbox" name="selecao" id="selecao">&nbsp;&nbsp;<?php echo $this->escapeHtml($item->getEstaca()); ?></td>
+                <td><?php echo (null != $item->getMaterial()) ? $this->escapeHtml($item->getMaterial()->getCgs()) : ""; ?></td>
+                <td><?php echo (null != $item->getMaterial()) ? $this->escapeHtml($item->getMaterial()->getAcesso()) : ""; ?></td>
+                <td><?php echo $this->escapeHtml($item->getOrigem()); ?></td>
+                <td></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-md-6">
+        <input type="text" name="pesquisa" id="pesquisa" placeholder="Pesquisar" >
+        <button type="button" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Marcar seleção" onclick="selecionarMaterial()">
+            <span class="glyphicon glyphicon-check"></span>
+        </button>
+        <button type="button" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Desmarcar seleção" onclick="">
+            <span class="glyphicon glyphicon-unchecked"></span>
+        </button><br>
+        <span style="font-size: smaller;" class="label label-warning">Selecione uma estaca ou um intervalo de estacas, separadas por hífen.</span>
+        <span style="font-size: smaller;" class="label label-warning">Utilize vírgulas para delimitar os intervalos desejados. Por exemplo, a</span>
+        <span style="font-size: smaller;" class="label label-warning">seleção "10-14,20,30" retornará as estacas 10, 11, 12, 13, 14, 20 e 30.<br></span>
+    </div>
+    <div class="col-md-5">
+        <?php echo $this->formElement($form->get('acao')); ?>
+        <?php echo $this->formElementErrors($form->get('acao')); ?>
+    </div>
+</div>
+    
+<script type="text/javascript">
+    
+</script>

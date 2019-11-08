@@ -1,0 +1,28 @@
+<h3>Último CGS utilizado:</h3>
+<hr>
+<div class="row">
+    <div class="col-md-1">
+        <?php echo $this->escapeHtml($this->ultimoCgs);?>
+    </div>
+</div>
+<hr>
+<h3>CGS disponíveis:</h3>
+<hr>
+<div class="row">
+    <?php foreach($resultados as $cgs):?>
+        <div class="col-xs-1">
+            <?php echo $this->escapeHtml($cgs);?>
+    </div>
+    <?php endforeach;?>
+</div>
+<hr>
+<h3>Localizações disponíveis:</h3>
+<hr>
+<div class="row">
+    <?php foreach($localizacoesDisponiveis as $localizacao):?>
+    <div class="col-xs-1">
+        <?php echo $this->escapeHtml($localizacao->getLocalizacao());?>
+    </div>
+    <?php endforeach;?>
+    
+</div>

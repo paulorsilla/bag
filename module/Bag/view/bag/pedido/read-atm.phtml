@@ -1,0 +1,9 @@
+<?php
+    header("Content-Description: File Transfer");
+    //header("Content-Type: application/octet-stream");
+    header("Content-Disposition: attachment; filename=".$this->filename);
+    header("Content-type: application/".$this->type);
+    header("Content-Length: ".$this->size);
+    ob_end_clean(); //resolve o problema do pdf gerado não abrir no windows
+    echo $this->conteudo;
+    exit();

@@ -1,0 +1,193 @@
+<?php
+//    $this->headScript()->appendFile('/js/inputmask.js', 'text/javascript');
+//    $this->headScript()->appendFile('/js/jquery.inputmask.js', 'text/javascript');
+$this->headScript()->appendFile('/js/select2.min.js', 'text/javascript');
+$this->headScript()->appendFile('/js/pedido-save.js', 'text/javascript');
+
+$form = $this->form;
+?>
+
+<h1>Cadastro de pedido</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">
+                    Por favor, preencha o formulário abaixo e, em seguida, clique sobre o botão <i>Salvar</i>. <a
+                        class="btn btn-secondary btn-sm pull-right"
+                        href="/bag/pedido" title="Fechar"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <?php echo $this->form()->openTag($form); ?>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('dataRetirada')); ?><br>
+                        <?php echo $this->formElement($form->get('dataRetirada')); ?>
+                        <?php echo $this->formElementErrors($form->get('dataRetirada')); ?>                  
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('tipo')); ?><br>
+                        <?php echo $this->formElement($form->get('tipo')); ?>
+                        <?php echo $this->formElementErrors($form->get('tipo')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('requisitante')); ?><br>
+                        <?php echo $this->formElement($form->get('requisitante')); ?>
+                        <?php echo $this->formElementErrors($form->get('requisitante')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('recebedor')); ?><br>
+                        <?php echo $this->formElement($form->get('recebedor')); ?>
+                        <?php echo $this->formElementErrors($form->get('recebedor')); ?>                  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('area')); ?><br>
+                        <?php echo $this->formElement($form->get('area')); ?>
+                        <?php echo $this->formElementErrors($form->get('area')); ?>                  
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('anexoAtm')); ?><br>
+                        <?php echo $this->formElement($form->get('anexoAtm')); ?>
+                        <?php echo $this->formElementErrors($form->get('anexoAtm')); ?>                  
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('fileAtm')); ?><br>
+                        <button id="uploadAtm" class="btn btn-primary btn-sm" title="Anexar arquivo..."><span class="glyphicon glyphicon-file"></span></button>
+                        <?php echo $this->formElement($form->get('fileAtm')); ?>
+                        <?php echo $this->formElementErrors($form->get('fileAtm')); ?>                
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($form->get('instituicao')); ?><br>
+                        <?php echo $this->formElement($form->get('instituicao')); ?>
+                        <?php echo $this->formElementErrors($form->get('instituicao')); ?>                  
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($form->get('observacao')); ?><br>
+                        <?php echo $this->formElement($form->get('observacao')); ?>
+                        <?php echo $this->formElementErrors($form->get('observacao')); ?>                  
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Material</h3>
+                                </div>
+                                <div class="panel-body" id="gridItem">
+                                </div>
+                                <?php
+                                if (!empty($this->pedido)):
+                                    $id = $this->pedido->getId();
+                                    ?>
+                                    <script>
+                                        $(document).ready(function () {
+                                            refreshGridItem('<?php echo $id; ?>');
+                                        });
+                                    </script>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <?php 
+                    if (null == $pedido || (null != $pedido && $pedido->getStatus() == 1)):?>
+                        <div class="col-md-1">
+                            <?php echo $this->formElement($form->get('submit')); ?>
+                        </div>
+                    
+                    <?php 
+                        endif;
+                        if (null != $pedido):?>
+                        <div class="col-md-1">
+                            <a class="btn btn-primary" href="/bag/pedido/print/<?php echo $pedido->getId()?>" title="Imprimir"><span class="glyphicon glyphicon-print"></span></a>
+                        </div>
+                    <?php endif; 
+                        if  (null != $pedido && $pedido->getStatus() == 1):?>
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Encerrar pedido..." onclick="encerrarPedido('<?php echo $pedido->getId();?>')">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </button>
+                            </div>
+                    <?php endif; ?>
+                </div>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="ItemModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Inclusão de material ao pedido</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="fncSalvarItem(this)">Salvar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="ExclusaoItemModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Exclusão</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="fncExcluirItem(this)">Sim</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Não</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="EncerrarModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Encerrar pedido</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="fncEncerrarPedido(this)">Sim</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Não</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+    $("#cgs").select2({
+        placeholder: "Selecione o material",
+        allowClear: true
+    });
+</script>

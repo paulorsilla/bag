@@ -1,0 +1,36 @@
+<h1>Grupos cadastrados</h1>
+<div class="row">
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Abreviatura</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->tiposbag as $tipobag): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($tipobag->getDescricao()); ?></td>
+                    <td><?php echo $this->escapeHtml($tipobag->getAbreviatura()); ?></td>
+                    <td><a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/tipo-bag', ['action' => 'save', 'id' => $tipobag->getId()]) ?>"
+                           title="Editar registro."><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/tipo-bag', ['action' => 'delete', 'id' => $tipobag->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?php echo $this->paginationControl($this->tiposbag, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/tipo-bag']); ?>
+    </span>
+</div>
+
+<div class="row">
+    <a class="btn btn-primary pull-left" href="/bag/tipo-bag/save">Novo registro</a>
+</div>
+

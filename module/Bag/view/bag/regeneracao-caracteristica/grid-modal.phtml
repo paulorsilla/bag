@@ -1,0 +1,26 @@
+<div class="row">
+
+    <?php foreach ($this->regeneracao->getCaracteristicas() as $caracteristica): ?>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary btn-xs" onclick="excluirCaracteristica('<?php echo $this->regeneracao->getId();?>','<?php echo $caracteristica->getId(); ?>')">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+                <?php echo $this->escapeHtml($caracteristica->getNomeCurto()); ?>
+            </div>
+    <?php endforeach; ?>
+</div>
+<hr>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Incluir as características mais rotineiras para serem avaliadas na regeneração."onclick="novasCaracteristicasRotina('<?php echo $this->regeneracao->getId(); ?>')">
+                <span class="glyphicon glyphicon-list-alt"></span>
+            </button>
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Incluir nova(s) característica(s) para ser(em) avaliada(s) na regeneração..."onclick="novaCaracteristica('<?php echo $this->regeneracao->getId(); ?>')">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+    </div>
+</div>
+

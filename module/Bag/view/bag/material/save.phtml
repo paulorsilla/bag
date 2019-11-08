@@ -1,0 +1,325 @@
+<?php
+    $this->headScript()->appendFile('/js/inputmask.js', 'text/javascript');
+    $this->headScript()->appendFile('/js/jquery.inputmask.js', 'text/javascript');
+    $this->headScript()->appendFile('/js/material-save.js', 'text/javascript');
+    $form = $this->form;
+?>
+
+<h1>Cadastro de material</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">
+                    Por favor, preencha o formulário abaixo e, em seguida, clique sobre o botão <i>Salvar</i>. <a
+                        class="btn btn-secondary btn-sm pull-right"
+                        href="/bag/material" title="Fechar"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <?php echo $this->form()->openTag($form); ?>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('cgs')); ?><br>
+                        <?php echo $this->formElement($form->get('cgs')); ?>
+                        <?php echo $this->formElementErrors($form->get('cgs')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('bracod')); ?><br>
+                        <?php echo $this->formElement($form->get('bracod')); ?>
+                        <?php echo $this->formElementErrors($form->get('bracod')); ?>                  
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo $this->formLabel($form->get('acesso')); ?><br>
+                        <?php echo $this->formElement($form->get('acesso')); ?>
+                        <?php echo $this->formElementErrors($form->get('acesso')); ?>                  
+                    </div>
+                    <div class="col-md-1">
+                        <?php echo $this->formLabel($form->get('cultivar')); ?><br>
+                        <?php echo $this->formElement($form->get('cultivar')); ?>
+                        <?php echo $this->formElementErrors($form->get('cultivar')); ?>                  
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('programa')); ?><br>
+                        <?php echo $this->formElement($form->get('programa')); ?>
+                        <?php echo $this->formElementErrors($form->get('programa')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('genero')); ?><br>
+                        <?php echo $this->formElement($form->get('genero')); ?>
+                        <?php echo $this->formElementErrors($form->get('genero')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('especie')); ?><br>
+                        <?php echo $this->formElement($form->get('especie')); ?>
+                        <?php echo $this->formElementErrors($form->get('especie')); ?>                  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($form->get('observacao')); ?><br>
+                        <?php echo $this->formElement($form->get('observacao')); ?>
+                        <?php echo $this->formElementErrors($form->get('observacao')); ?>                  
+                    </div>
+                </div>
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Imagens</h3>
+                                </div>
+                                <div class="panel-body" id="gridImagens">
+                                </div>
+
+                                <?php if ( !empty($this->material1) ):
+                                    $id = $this->material1->getId();?>
+                                    <script>
+                                        $(document).ready(function () {
+                                            refreshGridImagens('<?php echo $id;?>');
+                                        });
+                                    </script>
+                                <?php endif;?>
+                           </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Passaporte</h3>
+                                </div>
+                                <div class="panel-body" id="gridPassaporte">
+                                </div>
+
+                                <?php if ( !empty($this->material1) ):?>
+                                    <script>
+                                        $(document).ready(function () {
+                                            refreshGridPassaporte('<?php echo $id;?>');
+                                        });
+                                    </script>
+                                <?php endif;?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Características</h3>
+                                </div>
+                                <div class="panel-body" id="gridCaracteristica">
+
+                                </div>
+                                <?php
+                                $idMaterial = (null != $this->material1) ? $this->material1->getId() : null;?>
+                                <script>
+                                    $(document).ready(function () {
+                                        refreshGridCaracteristica('<?php echo $idMaterial;?>');
+                                    });
+                                    </script>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Bag</h3>
+                                </div>
+                                <div class="panel-body" id="gridBag">
+                                </div>
+
+                                <?php if ( !empty($this->material1) ):
+                                    $id = $this->material1->getId();?>
+                                    <script>
+                                        $(document).ready(function () {
+                                            refreshGridBag('<?php echo $id;?>');
+                                        });
+                                    </script>
+                                <?php endif;?>
+                            </div>
+                        </div>
+                       <div class="col-md-3">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Grupos</h3>
+                                </div>
+                                <div class="panel-body" id="gridTipoBag">
+
+                                </div>
+                                <script>
+                                    $(document).ready(function () {
+                                        refreshGridTipoBag('<?php echo $idMaterial;?>');
+                                    });
+                                    </script>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-10">
+                        <?php echo $this->formElement($form->get('submit')); ?>
+                    </div>
+                    <div class='col-md-2 text-right'>
+                        <?php if (null != $this->material1):?>
+                            <a class="btn btn-primary"
+                              href="<?php echo $this->url('bag/material', ['action' => 'delete', 'id' => $this->material1->getId()]) ?>"
+                              title="Excluir registro.">Excluir</span></a>
+                        <?php endif;?>
+                    </div>
+                </div>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="PassaporteModal" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cadastro de passaporte</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="fncSalvarPassaporte(this)">Salvar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="ExclusaoPassaporteModal" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Exclusão</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="fncExcluirPassaporte(this)">Sim</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal">Não</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="CaracteristicaModal" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cadastro das características do material</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="fncSalvarCaracteristica(this)">Salvar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="ExclusaoCaracteristicaModal" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Exclusão</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="fncExcluirCaracteristica(this)">Sim</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal">Não</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="BagModal" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cadastro de bag</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="fncSalvarBag(this)">Salvar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="ExclusaoBagModal" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Exclusão</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="fncExcluirBag(this)">Sim</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal">Não</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="TipoBagModal" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cadastro dos tipos de bag do material</h4>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="fncSalvarTipoBag(this)">Salvar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="ExclusaoTipoBagModal" data-backdrop="static">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Exclusão</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="fncExcluirTipoBag(this)">Sim</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal">Não</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -1,0 +1,110 @@
+<?php
+    $this->headScript()->appendFile('/js/importacao-caderneta-save.js', 'text/javascript');
+    $form = $this->form;
+    $form->get('submit')->setAttributes([
+        'class' => 'btn btn-primary'
+    ]);
+?>
+
+<h1>Importação de caderneta</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">
+                    Por favor, preencha o formulário abaixo e, em seguida, clique sobre o botão <i>Salvar</i>. <a
+                        class="btn btn-secondary btn-sm pull-right"
+                        href="/bag/importacao-caderneta" title="Fechar"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <?php echo $this->form()->openTag($form); ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($form->get('nomeArquivo')); ?><br>
+                        <?php echo $this->formElement($form->get('nomeArquivo')); ?>
+                        <?php echo $this->formElementErrors($form->get('nomeArquivo')); ?>                  
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('fileUpload')); ?><br>
+                        <button id="uploadArquivo" class="btn btn-primary btn-sm" title="Anexar arquivo..."><span class="glyphicon glyphicon-file"></span></button>
+                        <?php echo $this->formElement($form->get('fileUpload')); ?>
+                        <?php echo $this->formElementErrors($form->get('fileUpload')); ?>                  
+                    </div>
+                </div>
+                <hr>
+                <h5 class="text-center"><b>Colunas</b></h5>
+                <div class="row">
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('colunaCgs')); ?><br>
+                        <?php echo $this->formElement($form->get('colunaCgs')); ?>
+                        <?php echo $this->formElementErrors($form->get('colunaCgs')); ?>                  
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('colunaAcesso')); ?><br>
+                        <?php echo $this->formElement($form->get('colunaAcesso')); ?>
+                        <?php echo $this->formElementErrors($form->get('colunaAcesso')); ?>                  
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('colunaLocalizacao')); ?><br>
+                        <?php echo $this->formElement($form->get('colunaLocalizacao')); ?>
+                        <?php echo $this->formElementErrors($form->get('colunaLocalizacao')); ?>                  
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('colunaEspecie')); ?><br>
+                        <?php echo $this->formElement($form->get('colunaEspecie')); ?>
+                        <?php echo $this->formElementErrors($form->get('colunaEspecie')); ?>                  
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('colunaPrograma')); ?><br>
+                        <?php echo $this->formElement($form->get('colunaPrograma')); ?>
+                        <?php echo $this->formElementErrors($form->get('colunaPrograma')); ?>                  
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('colunaCultivar')); ?><br>
+                        <?php echo $this->formElement($form->get('colunaCultivar')); ?>
+                        <?php echo $this->formElementErrors($form->get('colunaCultivar')); ?>                  
+                    </div>
+                </div>
+                <hr>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tabDescritores">Descritores</a></li>
+                    <li><a data-toggle="tab" href="#tabPreProcessamento">Pré-processamento</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="tabDescritores" class="tab-pane fade in active">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-body" style="max-height: 400px; overflow-y: scroll" id="descritores"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tabPreProcessamento" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-body" style="max-height: 400px; overflow-y: scroll" id="preprocessamento">
+                                        <div id="resultadopreprocessamento"></div>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="preprocessamento()">
+                                                <span class="glyphicon glyphicon-search"></span> Executar
+                                            </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <?php echo $this->formElement($form->get('submit')); ?>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,65 @@
+<h1>Regenerações cadastradas</h1>
+<div class="row">
+    <div class="col-xs-11">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Data plantio</th>
+                    <th>Motivo(s)</th>
+                    <th>Status</th>
+                    <th>Opções</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+
+                $status = [1 => "<span class='label' style='background-color: deepskyblue;'>Incluindo material para plantio</span>", 2 => "<span class='label' style='background-color: #41A317;'>Pronta para coleta</span>", 3 => "<span class='label' style='background-color: #C85A17;'>Coleta encerrada</span>", 4 => "<span class='label' style='background-color: red;'>Finalizada</span>"];
+
+                foreach ($this->regeneracoes as $regeneracao): ?>
+                    <tr>
+                        <td><?php echo $this->escapeHtml($regeneracao->getTitulo()); ?></td>
+                        <td><?php echo (null != $regeneracao->getDataPlantio()) ? $this->escapeHtml($regeneracao->getDataPlantio()->format("d/m/Y")) : ""; ?></td>
+                        <td><?php foreach($regeneracao->getMotivos() as $motivo):
+                                      echo $this->escapeHtml($motivo->getDescricao())."<br>"; 
+                                  endforeach; ?></td>
+                        <td><?php echo $status[$regeneracao->getStatus()]; ?></td>
+                        <td>
+                            <?php if ($regeneracao->getStatus() == 1):?>
+                                <a class="btn btn-primary btn-xg pull-center"
+                                   href="<?php echo $this->url('bag/regeneracao', ['action' => 'save', 'id' => $regeneracao->getId()]) ?>"
+                                   title="Editar registro."><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a class="btn btn-primary btn-xg pull-center"
+                                    href="<?php echo $this->url('bag/regeneracao', ['action' => 'delete', 'id' => $regeneracao->getId()]) ?>"
+                                    title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                            <?php endif;?>
+
+                            <?php if ($regeneracao->getStatus() == 2):?>
+                                <a class="btn btn-primary btn-xg pull-center"
+                                   href="<?php echo $this->url('bag/coleta', ['action' => 'index', 'id' => $regeneracao->getId()]) ?>"
+                                   title="Gerenciar coletas."><span class="glyphicon glyphicon-cog"></span></a>
+                                <a class="btn btn-primary btn-xg pull-center"
+                                   href="<?php echo $this->url('bag/regeneracao', ['action' => 'changestatus', 'id' => $regeneracao->getId(), 'status' => '3']) ?>"
+                                   title="Encerrar etapa de coleta."><span class="glyphicon glyphicon-ok"></span></a>
+                            <?php endif;?>
+
+                            <?php if ($regeneracao->getStatus() == 3):?>
+                                <a class="btn btn-primary btn-xg pull-center"
+                                   href="<?php echo $this->url('bag/regeneracao', ['action' => 'update', 'id' => $regeneracao->getId()]) ?>"
+                                   title="Atualização dos materiais no BAG e novas ações."><span class="glyphicon glyphicon-check"></span></a>
+                            <?php endif;?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <span class="pull-right">
+            <?php echo $this->paginationControl($this->regeneracoes, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/regeneracao']); ?>
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    <a class="btn btn-primary pull-left" href="/bag/regeneracao/save">Novo registro</a>
+</div>
+

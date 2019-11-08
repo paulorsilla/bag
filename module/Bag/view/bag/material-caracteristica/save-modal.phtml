@@ -1,0 +1,24 @@
+<?php echo $this->form()->openTag($this->form); ?>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="panel-title">
+            Por favor, preencha o formulário abaixo e, em seguida, clique sobre
+            o botão <i>Salvar</i>. 
+        </h3>
+        <hr>
+        <div class="row">
+            <div class="col-md-7">
+                <?php echo $this->formLabel($form->get('caracteristica')); ?><br>
+                <?php echo $this->formElement($form->get('caracteristica')); ?>
+                <?php echo $this->formElementErrors($form->get('caracteristica')); ?>                  
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                <?php echo $this->formLabel($form->get('valor')); ?><br>
+                <?php echo $this->formElement($form->get('valor')); ?>
+                <?php echo $this->formElementErrors($form->get('valor')); ?>                  
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->form()->closeTag(); ?>

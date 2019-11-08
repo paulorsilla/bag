@@ -1,0 +1,68 @@
+<?php
+$form = $this->form;
+
+$form->get('submit')->setAttributes([
+    'class' => 'btn btn-primary'
+]);
+?>
+
+<h1>Cadastro de módulo</h1>
+
+<div class="row">
+    <div class="col-md-22">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">
+                    Por favor, preencha o formulário abaixo e, em seguida, clique sobre o botão <i>Salvar</i>. <a
+                        class="btn btn-secondary btn-sm pull-right"
+                        href="/bag/modulo" title="Fechar"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <?php echo $this->form()->openTag($form); ?>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($form->get('numero')); ?><br>
+                        <?php echo $this->formElement($form->get('numero')); ?>
+                        <?php echo $this->formElementErrors($form->get('numero')); ?>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($form->get('lados')); ?><br>
+                        <?php echo $this->formElement($form->get('lados')); ?>
+                        <?php echo $this->formElementErrors($form->get('lados')); ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($form->get('faces')); ?><br>
+                        <?php echo $this->formElement($form->get('faces')); ?>
+                        <?php echo $this->formElementErrors($form->get('faces')); ?>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($form->get('niveis')); ?><br>
+                        <?php echo $this->formElement($form->get('niveis')); ?>
+                        <?php echo $this->formElementErrors($form->get('niveis')); ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($form->get('espacos')); ?><br>
+                        <?php echo $this->formElement($form->get('espacos')); ?>
+                        <?php echo $this->formElementErrors($form->get('espacos')); ?>
+                    </div>
+                </div>
+                   
+                <br>
+                <br>
+                <?php echo $this->formElement($form->get('submit')); ?>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+

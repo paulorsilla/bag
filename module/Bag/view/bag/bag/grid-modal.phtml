@@ -1,0 +1,47 @@
+<?php if (null == $this->material->getBag()):?>
+    <div class="row">
+         <div class="col-md-12">
+             <div class="pull-right">
+                 <button type="button" class="btn btn-primary btn-xs" onclick="novoBag('<?php echo $this->material->getId();?>')">
+                     <span class="glyphicon glyphicon-plus"></span>
+                 </button>
+             </div>
+         </div>
+     </div>
+<?php else:
+    $bag = $this->material->getBag();
+    $saldo = (0 != $bag->getPesoSem()) ? $bag->getPesoTotal() * 100 / $bag->getPesoSem() : 0;
+//    $saldo = $bag->getPesoTotal() * 100 / $bag->getPesoSem();
+?>
+    <div class="row">
+        <div class="col-md-12"><b>Data Inclusão</b><br><?php echo (null != $bag->getDataInclusao()) ? $this->escapeHtml($bag->getDataInclusao()->format("d/m/Y")): "<br>";?></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><b>Safra</b><br><?php echo $this->escapeHtml($bag->getSafra());?></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><b>Peso 100</b><br><?php echo $this->escapeHtml(number_format($bag->getPesoSem(), 2, ',', '.'))." g";?></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><b>Peso Total</b><br><?php echo $this->escapeHtml(number_format($bag->getPesoTotal(), 2, ',', '.'))." g";?></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><b>Número Sementes</b><br><?php echo $this->escapeHtml(number_format($saldo, 2,',','.'));?></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><b>Localização</b><br><?php echo $this->escapeHtml($bag->getLocalizacao()->getLocalizacao());?></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary btn-xs" onclick="editarBag('<?php echo $bag->getMaterial()->getId();?>')">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button type="button" class="btn btn-primary btn-xs" onclick="excluirBag('<?php echo $bag->getMaterial()->getId();?>')">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+<?php endif;

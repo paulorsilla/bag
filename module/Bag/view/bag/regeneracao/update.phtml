@@ -1,0 +1,96 @@
+<?php    $this->headScript()->appendFile('/js/regeneracao-update.js', 'text/javascript'); ?>
+
+<h1>Atualização de material e novas ações.</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">
+                    Por favor, preencha o formulário abaixo e, em seguida, clique sobre o botão <i>Salvar</i>. <a
+                        class="btn btn-secondary btn-sm pull-right"
+                        href="/bag/regeneracao" title="Fechar"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </h3>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->form()->openTag($form); ?>
+                <div class="row" style="background-color: #fbfcfc">
+                    <div class="col-md-12"  >
+                        <b>Título: </b><?php echo $this->escapeHtml($this->regeneracao->getTitulo());?>
+                    </div>
+                </div>
+                <hr>
+                <div class="row" style="background-color: #fbfcfc">
+                    <div class="col-md-4">
+                        <b>Motivo(s): <br></b>
+                        <?php foreach($this->regeneracao->getMotivos() as $motivo) {
+                            echo $this->escapeHtml($motivo->getDescricao())."<br>";
+                        }?>
+                    </div>
+
+                    <div class="col-md-1">
+                        <b>Safra:</b><br><?php echo $this->escapeHtml($this->regeneracao->getSafra());?>
+                    </div>
+                    <div class="col-md-1">
+                        <b>Dias luz:</b><br><?php echo $this->escapeHtml($this->regeneracao->getDiasLuz());?>
+                    </div>
+                    <div class="col-md-2">
+                        <b>Casa de vegetação:</b> <?php echo $this->escapeHtml($this->regeneracao->getCasaVegetacao());?>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <b>Estaca inicial: </b><?php echo $this->escapeHtml($this->regeneracao->getEstacaInicial());?> 
+                    </div>
+                    <div class="col-md-2">
+                        <b>Data do plantio: </b><br><?php echo $this->escapeHtml($this->regeneracao->getDataPlantio()->format("d/m/Y"));?>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Materiais</h3>
+                            </div>
+                            <div class="panel-body" id="gridItem">
+                            </div>
+                            <?php
+                            if (!empty($this->regeneracao)):
+                                $id = $this->regeneracao->getId();
+                                ?>
+                                <script>
+                                    $(document).ready(function () {
+                                        refreshGridItem('<?php echo $id; ?>');
+                                    });
+                                </script>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Descritores</h3>
+                            </div>
+                            <div class="panel-body" id="gridCaracteristica">
+                                <?php
+                                if (!empty($this->regeneracao)):
+                                    foreach($this->regeneracao->getCaracteristicas() as $caracteristica):?>
+                                        <div class="col-md-2"><?php echo $this->escapeHtml($caracteristica->getNomeCurto());?></div>
+                                    <?php endforeach;?>
+                                <?php endif;?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                <?php echo $this->form()->closeTag(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

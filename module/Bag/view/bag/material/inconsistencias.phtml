@@ -1,0 +1,48 @@
+<h3>CGS duplicados:</h3>
+<div class="row">
+    <?php if (count($this->resultadosCgs) == 0) {?>
+        <div class='col-md-12 label-success'>
+            <?php echo "Parabéns, nenhum CGS duplicado no BAG!";?>
+        </div>
+    <?php } else {
+        foreach($this->resultadosCgs as $material){?>
+            <div class="col-md-1">
+                <a href='/bag/material/index?cgs=<?php echo $material->getCgs();?>'>
+                <?php echo $this->escapeHtml($material->getCgs());?></a>
+            </div>
+    <?php }
+        }?>
+</div>
+<hr>
+<h3>Acessos duplicados:</h3>
+<div class="row">
+    <?php if (count($this->resultadosAcesso) == 0) {?>
+        <div class='col-md-12 label-success'>
+            <?php echo "Parabéns, nenhum Acesso duplicado no BAG!";?>
+        </div>
+    <?php } else {
+        foreach($this->resultadosAcesso as $acesso) {?>
+            <div class="col-md-3">
+                <a href='/bag/material/index?acesso=<?php echo $acesso;?>'>
+                <?php echo $this->escapeHtml($acesso);?></a>
+        </div>
+        <?php }
+    }?>
+</div>
+
+<hr>
+<h3>Mais de um material cadastrado na mesma localização:</h3>
+<div class="row">
+    <?php if (count($this->resultadosLocalizacao) == 0) {?>
+        <div class='col-md-12 label-success'>
+            <?php echo "Parabéns, nenhum material cadastrado em uma mesma localização no BAG!";?>
+        </div>
+    <?php } else {
+        foreach($this->resultadosLocalizacao as $localizacao) {?>
+            <div class="col-md-3">
+                <a href='/bag/material/index?localizacao=<?php echo $localizacao->getLocalizacao();?>'>
+                <?php echo $this->escapeHtml($localizacao->getLocalizacao());?></a>
+        </div>
+        <?php }
+    }?>
+</div>

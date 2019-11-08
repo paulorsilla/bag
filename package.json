@@ -1,0 +1,7 @@
+{
+	"name": "Bag",
+	"main": "public/index.php",
+	"dependencies": {
+		"browser-serialport": "^2.1.0"
+	}
+}

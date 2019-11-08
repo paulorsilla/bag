@@ -1,0 +1,59 @@
+<?php if ($this->pageCount): ?>
+    <nav>
+        <ul class="pagination">
+
+            <!-- First page link -->
+            <?php if (isset($this->previous)): ?>
+                <li><a 
+                        href="<?php echo $this->url($this->route, [], ['query' => array_merge($_GET, ['page' => $this->first])]); ?>"
+                        aria-label="First"><span aria-hidden="true">&laquo;</span>
+                    </a> </li>
+            <?php else: ?>
+                <li><span aria-hidden="true">&laquo;</span></li>  
+            <?php endif; ?>
+
+            <!-- Previous page link -->
+            <?php if (isset($this->previous)): ?>
+                <li><a
+                        href="<?php echo $this->url($this->route, [], ['query' => array_merge($_GET, ['page' => $this->previous])]); ?>"
+                        aria-label="Previous"> <span aria-hidden="true">&lt;</span>
+                    </a></li>  
+            <?php else: ?>
+                <li><span aria-hidden="true">&lt;</span></li>  
+            <?php endif; ?>
+
+            <!-- Numbered page links -->
+            <?php foreach ($this->pagesInRange as $page): ?>
+                <?php if ($page != $this->current): ?>
+                    <li><a
+                            href="<?php echo $this->url($this->route, [], ['query' => array_merge($_GET, ['page' => $page])]); ?>"><?php echo $this->escapeHtml($page); ?></a>
+                    </li>    
+                <?php else: ?>
+                    <li><span aria-hidden="true"><b><?php echo $this->escapeHtml($page); ?></b></span>
+                    </li>    
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+            <!-- Next page link -->
+            <?php if (isset($this->next)): ?>
+                <li><a
+                        href="<?php echo $this->url($this->route, [], ['query' => array_merge($_GET, ['page' => $this->next])]); ?>"
+                        aria-label="Next"> <span aria-hidden="true">&gt;</span>
+                    </a></li>  
+            <?php else: ?>
+                <li><span aria-hidden="true">&gt;</span></li> 
+            <?php endif; ?>
+
+            <!-- Last page link -->
+            <?php if (isset($this->next)): ?>
+                <li><a
+                        href="<?php echo $this->url($this->route, [], ['query' => array_merge($_GET, ['page' => $this->last])]); ?>"
+                        aria-label="Last"> <span aria-hidden="true">&raquo;</span>
+                </a>
+            <?php else: ?>
+                <li><span aria-hidden="true">&raquo;</span></li> 
+            <?php endif; ?>
+
+        </ul>
+    </nav>
+<?php endif; ?>

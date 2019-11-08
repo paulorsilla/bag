@@ -1,0 +1,37 @@
+<h1>Localizações cadastradas</h1>
+<div class="row">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Localização</th>
+                <th>Status</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->localizacoes as $localizacao): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($localizacao->getLocalizacao()); ?></td>
+                    <td><?php echo ($localizacao->getStatus()) ? "Ocupado":"Livre"; ?></td>
+                    <td><a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/localizacao', ['action' => 'delete', 'id' => $localizacao->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?php echo $this->paginationControl($this->localizacoes, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/localizacao']); ?>
+    </span>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-primary pull-left" href="/bag/localizacao/create">Criar</a>
+    </div>
+    <div class="col-md-6">  
+        <a class="btn btn-primary pull-right" href="/bag/localizacao/checagem"><span class="glyphicon glyphicon-search"></span> Checagem</a>
+    </div>
+</div>
+

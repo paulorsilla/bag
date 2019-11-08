@@ -1,0 +1,18 @@
+<?php echo $this->form()->openTag($this->form); ?>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="panel-title">
+            Por favor, preencha o formulário abaixo e, em seguida, clique sobre
+            o botão <i>Salvar</i>. 
+        </h3>
+        <hr>
+        <div class="row">
+            <div class="col-md-7">
+                <?php echo $this->formLabel($form->get('tipoBag')); ?><br>
+                <?php echo $this->formElement($form->get('tipoBag')); ?>
+                <?php echo $this->formElementErrors($form->get('tipoBag')); ?>                  
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->form()->closeTag(); ?>

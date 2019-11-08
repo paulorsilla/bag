@@ -1,0 +1,38 @@
+<h1>Estados cadastrados</h1>
+<div class="row">
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>País</th>
+                <th>Estado</th>
+                <th>Sigla</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->estados as $estado): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($estado->getPais()->getDescricao()); ?></td>
+                    <td><?php echo $this->escapeHtml($estado->getDescricao()); ?></td>
+                    <td><?php echo $this->escapeHtml($estado->getSigla()); ?></td>
+                    <td><a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/estado', ['action' => 'save', 'id' => $estado->getId()]) ?>"
+                           title="Editar registro."><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/estado', ['action' => 'delete', 'id' => $estado->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?= $this->paginationControl($this->estados, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/estado']); ?>
+    </span>
+</div>
+
+<div class="row">
+    <a class="btn btn-primary pull-left" href="/bag/estado/save">Novo registro</a>
+</div>
+

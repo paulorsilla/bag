@@ -1,0 +1,42 @@
+<h1>Características cadastradas</h1>
+<div class="row">
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Nome curto</th>
+                <th>Descrição</th>
+                <th>Ordem</th>
+                <th>Rotina</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $rotina = ["0" => "Não", "1" => "Sim"];
+            foreach ($this->caracteristicas as $caracteristica): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($caracteristica->getNomeCurto()); ?></td>
+                    <td><?php echo $this->escapeHtml($caracteristica->getDescricao()); ?></td>
+                    <td><?php echo $this->escapeHtml($caracteristica->getOrdem()); ?></td>
+                    <td><?php echo $this->escapeHtml($rotina[$caracteristica->getRotina()]); ?></td>
+                    <td><a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/caracteristica', ['action' => 'save', 'id' => $caracteristica->getId()]) ?>"
+                           title="Editar registro."><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/caracteristica', ['action' => 'delete', 'id' => $caracteristica->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?php echo $this->paginationControl($this->caracteristicas, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/caracteristica']); ?>
+    </span>
+</div>
+
+<div class="row">
+    <a class="btn btn-primary pull-left" href="/bag/caracteristica/save">Novo registro</a>
+</div>
+

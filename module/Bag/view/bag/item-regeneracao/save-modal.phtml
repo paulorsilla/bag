@@ -1,0 +1,52 @@
+<?php echo $this->form()->openTag($this->form); ?>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="panel-title">
+            Por favor, preencha o formulário abaixo e, em seguida, clique sobre
+            o botão <i>Salvar</i>. 
+        </h3>
+        <hr>
+        <?php if($this->buscarBanco):?>
+            <div class="row">
+                <div class="col-md-9">
+                    <?php echo $this->formLabel($form->get('material')); ?><br>
+                    <?php echo $this->formElement($form->get('material')); ?>
+                    <?php echo $this->formElementErrors($form->get('material')); ?>                  
+                </div>
+                <div class="col-md-3">
+                    <?php echo $this->formLabel($form->get('quantidadeAtual')); ?><br>
+                    <?php echo $this->formElement($form->get('quantidadeAtual')); ?>
+                </div>
+            </div>
+        <?php endif;?>
+        <div class="row">
+            <div class="col-md-2">
+                <?php echo $this->formLabel($form->get('recipiente')); ?><br>
+                <?php echo $this->formElement($form->get('recipiente')); ?>
+                <?php echo $this->formElementErrors($form->get('recipiente')); ?>                  
+            </div>
+            <div class="col-md-3">
+                <?php echo $this->formLabel($form->get('quantidadePlantada')); ?><br>
+                <?php echo $this->formElement($form->get('quantidadePlantada')); ?>
+                <?php echo $this->formElementErrors($form->get('quantidadePlantada')); ?>                  
+            </div>
+            <div class="col-md-4">
+                <?php echo $this->formLabel($form->get('origem')); ?><br>
+                <?php echo $this->formElement($form->get('origem')); ?>
+                <?php echo $this->formElementErrors($form->get('origem')); ?>                  
+            </div>
+            <div class="col-md-3">
+                <?php echo $this->formLabel($form->get('acao')); ?><br>
+                <?php echo $this->formElement($form->get('acao')); ?>
+                <?php echo $this->formElementErrors($form->get('acao')); ?>                  
+            </div>
+        </div>
+    </div>
+</div>
+<?php echo $this->form()->closeTag(); ?>
+
+<script type="text/javascript">
+    $("#recipiente").change(function() {
+        $("#quantidadePlantada").val($(this).val());
+    });
+</script>

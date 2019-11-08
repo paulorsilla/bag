@@ -1,0 +1,93 @@
+<?php echo $this->form()->openTag($this->form); ?>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="panel-title">
+            Por favor, preencha o formulário abaixo e, em seguida, clique sobre
+            o botão <i>Salvar</i>. 
+        </h3>
+        <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('origem')); ?><br>
+                        <?php echo $this->formElement($form->get('origem')); ?>
+                        <?php echo $this->formElementErrors($form->get('origem')); ?>                  
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('genealogia')); ?><br>
+                        <?php echo $this->formElement($form->get('genealogia')); ?>
+                        <?php echo $this->formElementErrors($form->get('genealogia')); ?>                  
+                    </div>
+
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('genealogiaDescritiva')); ?><br>
+                        <?php echo $this->formElement($form->get('genealogiaDescritiva')); ?>
+                        <?php echo $this->formElementErrors($form->get('genealogiaDescritiva')); ?>                  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('sinonimia1')); ?><br>
+                        <?php echo $this->formElement($form->get('sinonimia1')); ?>
+                        <?php echo $this->formElementErrors($form->get('sinonimia1')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('sinonimia2')); ?><br>
+                        <?php echo $this->formElement($form->get('sinonimia2')); ?>
+                        <?php echo $this->formElementErrors($form->get('sinonimia2')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('sinonimia3')); ?><br>
+                        <?php echo $this->formElement($form->get('sinonimia3')); ?>
+                        <?php echo $this->formElementErrors($form->get('sinonimia3')); ?>                  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('sinonimia4')); ?><br>
+                        <?php echo $this->formElement($form->get('sinonimia4')); ?>
+                        <?php echo $this->formElementErrors($form->get('sinonimia4')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('sinonimia5')); ?><br>
+                        <?php echo $this->formElement($form->get('sinonimia5')); ?>
+                        <?php echo $this->formElementErrors($form->get('sinonimia5')); ?>                  
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('estaca')); ?><br>
+                        <?php echo $this->formElement($form->get('estaca')); ?>
+                        <?php echo $this->formElementErrors($form->get('estaca')); ?>                  
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($form->get('informacao')); ?><br>
+                        <?php echo $this->formElement($form->get('informacao')); ?>
+                        <?php echo $this->formElementErrors($form->get('informacao')); ?>                  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($form->get('pais')); ?><br>
+                        <?php echo $this->formElement($form->get('pais')); ?>
+                        <?php echo $this->formElementErrors($form->get('pais')); ?>                  
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $this->formLabel($form->get('estado')); ?><br>
+                        <?php echo $this->formElement($form->get('estado')); ?>
+                        <?php echo $this->formElementErrors($form->get('estado')); ?>                  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($form->get('instituicao')); ?><br>
+                        <?php echo $this->formElement($form->get('instituicao')); ?>
+                        <?php echo $this->formElementErrors($form->get('instituicao')); ?>                  
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>
+<?= $this->form()->closeTag(); ?>

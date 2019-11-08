@@ -1,0 +1,75 @@
+<?php
+$form = $this->form;
+
+$form->get('submit')->setAttributes([
+    'class' => 'btn btn-primary'
+]);
+?>
+
+<h1>Cadastro de coleta</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">
+                    Por favor, preencha o formulário abaixo e, em seguida, clique sobre o botão <i>Salvar</i>. <a
+                        class="btn btn-secondary btn-sm pull-right"
+                        href="/bag/coleta/index/<?php echo $this->regeneracao->getId();?>" title="Fechar"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <?php echo $this->form()->openTag($form); ?>
+                <input type="hidden" name="idRegeneracao" id="idRegeneracao" value="<?php echo $this->regeneracao->getId();?>">
+                <div class="row">
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('dataColeta')); ?><br>
+                        <?php echo $this->formElement($form->get('dataColeta')); ?>
+                        <?php echo $this->formElementErrors($form->get('dataColeta')); ?>
+                    </div>
+                    <div class="col-md-3">
+                        <?php echo $this->formLabel($form->get('responsavel')); ?><br>
+                        <?php echo $this->formElement($form->get('responsavel'));?>
+                        <?php echo $this->formElementErrors($form->get('responsavel')); ?>
+                    </div>
+                    <div class="col-md-3">
+                        
+                        <?php echo $this->formLabel($form->get('caracteristicas')); ?><br>
+                        <?php echo $this->formElement($form->get('caracteristicas'));?>
+                        <?php echo $this->formElementErrors($form->get('caracteristicas')); ?>
+
+                        <span style="font-size: smaller;" class="label label-warning">Para selecionar mais de uma característica,<br> segure a tecla CTRL ao clicar.</span>
+                    </div>
+                    <div class="col-md-4">
+                        <?php echo $this->formLabel($form->get('substituicoes')); ?><br>
+                        <?php echo $this->formElement($form->get('substituicoes')); ?>
+                        <?php echo $this->formElementErrors($form->get('substituicoes')); ?>
+                        <span style="font-size: smaller;" class="label label-warning">Use vírgulas para separar as expressões.</span>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <?php echo $this->formElement($form->get('submit')); ?>
+                <?php echo $this->form()->closeTag(); ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+//    var idRegeneracao = $("#idRegeneracao").val();
+    
+//    $.ajax({
+//        type: 'POST',
+//        url: '/bag/coleta/busca-caracteristicas',
+//        data: {idRegeneracao:idRegeneracao},
+//        success: function(d) {
+//            $("#caracteristicas").html(d.options);
+//        },
+//        dataType: 'json'
+//    });
+    
+</script>

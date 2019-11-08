@@ -1,0 +1,84 @@
+    <div class="row" style="background-color:#f8f8f8" id="ferramentas">
+        <div class="col-xs-12 text-right">
+             <a class="btn btn-secondary btn-sm pull-right" href="/bag/pedido" title="Sair"><span class="glyphicon glyphicon-remove"></span></a>
+             <?php if($this->pedido->getStatus() == 1):?>
+                 <a class="btn btn-secondary btn-sm pull-right" href="/bag/pedido/save/<?php echo $this->pedido->getId();?>" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a>
+             <?php endif;?>
+             <a class="btn btn-secondary btn-sm pull-right" href="#" title="Imprimir" id="btnImprimir"><span class="glyphicon glyphicon-print"></span></a>
+        </div>
+        <br>
+    </div>
+    <div class="row">
+        <div class="col-xs-10" style="text-align: center;"><h4>Saída de Sementes BAG Embrapa CNPSo</h4></div>
+        <div class="col-xs-2"><img src="/img/embrapa-cor.png" height="40"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xs-2 text-right"><b>Requisitante:</b></div>
+        <div class="col-xs-10"><?php echo $this->escapeHtml($this->pedido->getRequisitante());?></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2 text-right"><b>Instituição:</b></div>
+        <div class="col-xs-10"><?php echo (null != $this->instituicao) ? $this->escapeHtml($this->instituicao->getRazaoSocial()) : "";?></div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-2 text-right"><b>Endereço:</b></div>
+        <div class="col-xs-6"><?php echo (null != $this->instituicao) ? $this->escapeHtml($this->instituicao->getEndereco()) : "";?></div>
+        <div class="col-xs-1 text-right"><b>Cidade:</b></div>
+        <div class="col-xs-3"><?php echo (null != $this->instituicao) ? $this->escapeHtml($this->instituicao->getCidade()." - ".$this->instituicao->getUf()) : "";?></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-2 text-right"><b>Recebedor:</b></div>
+        <div class="col-xs-10"><?php echo $this->escapeHtml($this->pedido->getRecebedor());?></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-xs-2 text-right"><b>Pedido:</b></div>
+        <div class="col-xs-2"><?php echo $this->escapeHtml(str_pad($this->pedido->getId(), 4, '0', STR_PAD_LEFT));?></div>
+        
+        <div class="col-xs-2" style="text-align: right;"><b>Data retirada:</b></div>
+        <div class="col-xs-1"><?php echo $this->escapeHtml($this->pedido->getDataRetirada()->format("d/m/Y"));?></div>
+        
+        <div class="col-xs-2" style="text-align: right;"><b>Total de acessos:</b></div>
+        <div class="col-xs-3"><?php echo $this->escapeHtml(count($this->pedido->getItens()));?></div>
+    </div>
+
+    <hr style="margin: 5px;">
+    <div class="row">
+        <div class="col-xs-2"><b>BAGCOD</b></div>
+        <div class="col-xs-2"><b>Acesso</b></div>
+        <div class="col-xs-5"><b>Sinonimia</b></div>
+        <div class="col-xs-2"><b>Localização</b></div>
+        <div class="col-xs-1 text-right"><b>Qtde</b></div>
+    </div>
+    <hr style="margin: 5px;">
+    <?php foreach($this->itens as $k => $item):
+        $linha = $k % 2;
+        $fundo = ($linha != 0) ? "" : "background-color: #f8f8f8"; 
+        ?>
+        <div class="row" style="font-family: 'courier'; font-size: 14px;<?php echo $fundo;?>">
+            <div class="col-xs-2"><?php echo $this->escapeHtml($item->getMaterial()->getCgs());?></div>
+            <div class="col-xs-2"><?php echo $this->escapeHtml($item->getMaterial()->getAcesso());?></div>
+            <div class="col-xs-5"><?php echo $this->escapeHtml($item->getMaterial()->getPassaporte()->getSinonimia1());?>
+                                  <?php echo $this->escapeHtml($item->getMaterial()->getPassaporte()->getSinonimia2());?>
+                                  <?php echo $this->escapeHtml($item->getMaterial()->getPassaporte()->getSinonimia3());?>
+                                  <?php echo $this->escapeHtml($item->getMaterial()->getPassaporte()->getSinonimia4());?>
+                                  <?php echo $this->escapeHtml($item->getMaterial()->getPassaporte()->getSinonimia5());?>
+            </div>
+            <div class="col-xs-2"><?php echo $this->escapeHtml($item->getMaterial()->getBag()->getLocalizacao()->getLocalizacao());?></div>
+            <div class="col-xs-1 text-right"><?php echo $this->escapeHtml($item->getQuantidadeAtendida());?></div>
+        </div>
+    <?php endforeach; ?>
+<hr>
+<script type="text/javascript">
+    
+    $("#btnImprimir").on("click", function(e) {
+        e.preventDefault();
+        $("#ferramentas").hide();
+        print();
+        $("#ferramentas").show();
+    });
+    
+</script>

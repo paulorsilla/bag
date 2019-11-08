@@ -1,0 +1,13 @@
+<?php
+    $url = $this->url('bag/regeneracao', ['action' => 'close-modal', 'id' => $this->regeneracao->getId()]);
+?>
+
+<p>
+    Deseja realmente encerrar o cadastro de materiais da regeneração e baixar no BAG o saldo das sementes plantadas? 
+</p>
+
+<form action="<?php echo $url; ?>" method="post">
+    <div class="form-group">
+        <input type="hidden" name="id" value="<?php echo (int) $this->regeneracao->getId(); ?>" />
+    </div>
+</form>

@@ -1,0 +1,18 @@
+<?php
+    $title = 'Excluir um registro';
+    $url   = $this->url('bag/item-pedido', ['action' => 'delete-modal', 'id' => $this->itemPedido->getId()]);
+    $this->headTitle($title);
+    $material = $this->itemPedido->getMaterial();
+?>
+<h1><?php echo $this->escapeHtml($title) ?></h1>
+
+<p>
+    Deseja realmente excluir 
+    "<?php echo $this->escapeHtml($material->getCgs()." - ".$material->getAcesso()." - ".$material->getPassaporte()->getSinonimia1()); ?>"
+</p>
+
+<form action="<?php echo $url; ?>" method="post">
+    <div class="form-group">
+        <input type="hidden" name="id" value="<?php echo (int) $this->itemPedido->getId(); ?>" />
+    </div>
+</form>

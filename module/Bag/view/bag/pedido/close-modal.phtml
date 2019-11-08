@@ -1,0 +1,13 @@
+<?php
+    $url = $this->url('bag/pedido', ['action' => 'close-modal', 'id' => $this->pedido->getId()]);
+?>
+
+<p>
+    Deseja realmente encerrar o pedido e realizar a baixa no saldo dos materiais relacionados? 
+</p>
+
+<form action="<?php echo $url; ?>" method="post">
+    <div class="form-group">
+        <input type="hidden" name="id" value="<?php echo (int) $this->pedido->getId(); ?>" />
+    </div>
+</form>

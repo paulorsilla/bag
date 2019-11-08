@@ -1,0 +1,60 @@
+<?php if (null == $this->material->getPassaporte()):?>
+    <div class="row">
+         <div class="col-md-12">
+             <div class="pull-right">
+                 <button type="button" class="btn btn-primary btn-xs" onclick="novoPassaporte('<?php echo $this->material->getId();?>')">
+                     <span class="glyphicon glyphicon-plus"></span>
+                 </button>
+             </div>
+         </div>
+     </div>
+<?php else:
+    $passaporte = $this->material->getPassaporte();
+    ?>
+    <div class="row">
+        <div class="col-md-9"><b>Origem</b><br><?php echo $this->escapeHtml($passaporte->getOrigem());?></div>
+        <?php if ($passaporte->getSinonimia1() != ''):?>
+            <div class="col-md-3"><b>Sinonimia I</b><br><?php echo $this->escapeHtml($passaporte->getSinonimia1());?></div>
+        <?php endif;?>
+    </div>
+    <div class="row">
+        <?php if ($passaporte->getSinonimia2() != ''):?>
+            <div class="col-md-3"><b>Sinonimia II</b><br><?php echo $this->escapeHtml($passaporte->getSinonimia2());?></div>
+        <?php endif;?>
+        <?php if ($passaporte->getSinonimia3() != ''):?>
+            <div class="col-md-3"><b>Sinonimia III</b><br><?php echo $this->escapeHtml($passaporte->getSinonimia3());?></div>
+        <?php endif;?>
+        <?php if ($passaporte->getSinonimia4() != ''):?>
+            <div class="col-md-3"><b>Sinonimia IV</b><br><?php echo $this->escapeHtml($passaporte->getSinonimia4());?></div>
+        <?php endif;?>
+        <?php if ($passaporte->getSinonimia5() != ''):?>
+            <div class="col-md-3"><b>Sinonimia V</b><br><?php echo $this->escapeHtml($passaporte->getSinonimia5());?></div>
+        <?php endif;?>
+    </div>
+    <div class="row">
+        <div class="col-md-6"><b>Genealogia</b><br><?php echo $this->escapeHtml($passaporte->getGenealogia());?></div>
+        <div class="col-md-6"><b>Genealogia descritiva</b><br><?php echo $this->escapeHtml($passaporte->getGenealogiaDescritiva());?></div>
+    </div>
+    <div class="row">
+        <div class="col-md-9"><b>Informação</b><br><?php echo $this->escapeHtml($passaporte->getInformacao());?></div>
+        <div class="col-md-3"><b>Estaca</b><br><?php echo $this->escapeHtml($passaporte->getEstaca());?></div>
+    </div>
+    <div class="row">
+        <div class="col-md-3"><b>País</b><br><?php echo (null != $passaporte->getPais() ? $this->escapeHtml($passaporte->getPais()->getDescricao()) : "");?></div>
+        <div class="col-md-3"><b>Estado</b><br><?php echo (null != $passaporte->getEstado() ? $this->escapeHtml($passaporte->getEstado()->getDescricao()) : "");?></div>
+        <div class="col-md-6"><b>Instituição</b><br><?php echo $this->escapeHtml($passaporte->getInstituicao());?></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-primary btn-xs" onclick="editarPassaporte('<?php echo $passaporte->getMaterial()->getId();?>')">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button type="button" class="btn btn-primary btn-xs" onclick="excluirPassaporte('<?php echo $passaporte->getMaterial()->getId();?>')">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+<?php endif;

@@ -1,0 +1,55 @@
+{
+    "name": "embrapasoja/bag",
+    "description": "Banco Ativo de Germoplasma da Embrapa Soja",
+    "type": "project",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "mvc",
+        "zf"
+    ],
+    "homepage": "http://framework.zend.com/",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "zendframework/zend-component-installer": "^1.0 || ^0.7 || ^1.0.0-dev@dev",
+        "zendframework/zend-mvc": "^3.0.1",
+        "zfcampus/zf-development-mode": "^3.0",
+        "zendframework/zend-mvc-form": "^1.0",
+        "zendframework/zend-mvc-i18n": "^1.0",
+        "zendframework/zend-session": "^2.7.1",
+        "zendframework/zend-servicemanager-di": "^1.0",
+        "doctrine/doctrine-orm-module": "^2.1",
+        "zendframework/zend-ldap": "^2.9",
+        "zendframework/zend-db": "^2.9",
+        "zendframework/zend-paginator": "^2.8",
+        "symfony/yaml": "^4.1",
+        "zendframework/zend-mvc-plugin-identity": "^1.1",
+        "zendframework/zend-serializer": "^2.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bag\\": "module/Bag/src/",
+            "User\\": "module/User/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ApplicationTest\\": "module/Application/test/"
+        }
+    },
+    "extra": [],
+    "scripts": {
+        "cs-check": "phpcs",
+        "cs-fix": "phpcbf",
+        "development-disable": "zf-development-mode disable",
+        "development-enable": "zf-development-mode enable",
+        "development-status": "zf-development-mode status",
+        "post-create-project-cmd": [
+            "@development-enable"
+        ],
+        "serve": "php -S 0.0.0.0:8080 -t public public/index.php",
+        "test": "phpunit"
+    }
+}

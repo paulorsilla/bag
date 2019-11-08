@@ -1,0 +1,33 @@
+<h1>Motivos cadastrados</h1>
+<div class="row">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Motivo</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->motivos as $motivo): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($motivo->getDescricao()); ?></td>
+                    <td><a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/motivo', ['action' => 'save', 'id' => $motivo->getId()]) ?>"
+                           title="Editar registro."><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/motivo', ['action' => 'delete', 'id' => $motivo->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?php echo $this->paginationControl($this->motivos, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/motivo']); ?>
+    </span>
+</div>
+
+<div class="row">
+    <a class="btn btn-primary pull-left" href="/bag/motivo/save">Novo registro</a>
+</div>
+

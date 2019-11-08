@@ -1,0 +1,52 @@
+<h1>Passaportes cadastrados</h1>
+<div class="row">
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Origem</th>
+                <th>Genealogia</th>
+                <th>Genealogia descritiva</th>
+                <th>Sinonimia I</th>
+                <th>Sinonimia II</th>
+                <th>Sinonimia III</th>
+                <th>Informação</th>
+                <th>País</th>
+                <th>Estado</th>
+                <th>Instituição</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->passaportes as $passaporte): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($passaporte->getOrigem()); ?></td>
+                    <td><?php echo $this->escapeHtml($passaporte->getGenealogia()); ?></td>
+                    <td><?php echo $this->escapeHtml($passaporte->getGenealogiaDescritiva()); ?></td>
+                    <td><?php echo $this->escapeHtml($passaporte->getSinonimia1()); ?></td>
+                    <td><?php echo $this->escapeHtml($passaporte->getSinonimia2()); ?></td>
+                    <td><?php echo $this->escapeHtml($passaporte->getSinonimia3()); ?></td>
+                    <td><?php echo $this->escapeHtml($passaporte->getInformacao()); ?></td>
+                    <td><?php echo $this->escapeHtml($passaporte->getPais()->getDescricao()); ?></td>
+                    <td><?php echo $this->escapeHtml($passaporte->getEstado()->getDescricao()); ?></td>
+                    <td><?php echo $this->escapeHtml($passaporte->getInstituicao()); ?></td>
+                    <td><a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/passaporte', ['action' => 'save', 'id' => $passaporte->getId()]) ?>"
+                           title="Editar registro."><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/passaporte', ['action' => 'delete', 'id' => $passaporte->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?php echo $this->paginationControl($this->passaportes, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/passaporte']); ?>
+    </span>
+</div>
+
+<div class="row">
+    <a class="btn btn-primary pull-left" href="/bag/passaporte/save">Novo registro</a>
+</div>
+

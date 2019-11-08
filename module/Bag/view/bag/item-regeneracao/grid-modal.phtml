@@ -1,0 +1,106 @@
+<input type="hidden" id="regeneracaoId" name="regeneracaoId" value="<?php echo $this->regeneracao->getId();?>">
+<table class="table table-striped table-hover">
+        <thead>
+            <tr class="small">
+                <th>CGS</th>
+                <th>Acesso</th>
+                <th>Sinonimia</th>
+                <th>Localização</th>
+                <th>Origem</th>
+                <th>Estaca</th>
+                <th>Qtde plantada</th>
+                <th>Ações</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($this->regeneracao->getItens() as $item): 
+                $textoAcao = "";
+                foreach($item->getAcoes() as $acao):
+                    $textoAcao .= "<span class='label label-primary'>".$acao->getAcao()->getDescricao()."</span></br>";
+                endforeach;
+            ?>
+                <tr class="small">
+                    <td><?php echo (null != $item->getMaterial()) ? $this->escapeHtml($item->getMaterial()->getCgs()) : ""; ?></td>
+                    <td><?php echo (null != $item->getMaterial()) ? $this->escapeHtml($item->getMaterial()->getAcesso()) : ""; ?></td>
+                    <td><?php echo (null != $item->getMaterial() && null != $item->getMaterial()->getPassaporte()) ? $this->escapeHtml($item->getMaterial()->getPassaporte()->getSinonimia1()) : "";?></td>
+                    <td><?php echo (null != $item->getMaterial()) ? $this->escapeHtml($item->getMaterial()->getBag()->getLocalizacao()->getLocalizacao()) : "";?></td>
+                    <td><?php echo $this->escapeHtml($item->getOrigem()); ?></td>
+                    <td><?php echo $this->escapeHtml($item->getEstaca()); ?></td>
+                    <td><?php echo $this->escapeHtml($item->getQuantidadePlantada()); ?></td>
+                    
+                    <td><?php echo $textoAcao;?></td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-xs" data-toggle="tooltip" data-placement="top" title="Excluir item..." onclick="excluirItem('<?php echo $item->getId();?>')">
+                        <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+            <?php endforeach;
+            if ($this->regeneracao->getStatus() == 1):
+            ?>
+                <tr class="small" style="background-color: #f0ffff;">
+                    <td>
+                        <input type="text" class="form-control" placeholder="CGS" name="pesquisaCgs" id="pesquisaCgs" value=""/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="Acesso" name="pesquisaAcesso" id="pesquisaAcesso" value=""/>
+                    </td>
+                    <td colspan="1">
+                        <input type="text" class="form-control" placeholder="Sinonimia" name="pesquisaSinonimia" id="pesquisaSinonimia" value=""/>
+                    </td>
+                    <td colspan="5"></td>
+                    <td colspan="1" style="text-align: center;">
+                        <button id="addNovoItem" type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Incluir um novo material à regeneração..." onclick="novoItem('<?php echo $this->regeneracao->getId();?>')">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <label class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Carregar lista de materiais a partir de uma planilha..." for="importar"><span class="glyphicon glyphicon-import" ></span>
+                            <input type="file" name="importar" style="display:none;" id="importar">
+                        </label>
+
+                    </td>
+                </tr>
+            <?php endif;?>
+        </tbody>
+    </table>
+
+<script type="text/javascript">
+    
+    $("#importar").change(function() {
+        var formData = new FormData();
+        formData.append('regeneracaoId', $("#regeneracaoId").val());
+        formData.append('arquivo', $("#importar")[0].files[0]);
+
+        $.ajax({
+            url: '/bag/item-regeneracao/save-file',
+            type: 'post',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function() {
+                location.reload();
+            }
+        });
+    });
+
+    function verificaEnter(e) {
+        var code = e.keyCode || e.which;
+        if (code === 13) {
+            e.preventDefault();
+            $("#addNovoItem").click();
+        }
+    }
+
+    $("#pesquisaCgs").keydown(function(e) {
+        verificaEnter(e);
+    });
+    
+    $("#pesquisaAcesso").keydown(function(e) {
+        verificaEnter(e);
+    });
+
+    $("#pesquisaSinonimia").keydown(function(e) {
+        verificaEnter(e);
+    });
+   
+</script>

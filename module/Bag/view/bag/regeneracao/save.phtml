@@ -1,0 +1,331 @@
+<?php
+$this->headScript()->appendFile('/js/select2.min.js', 'text/javascript');
+$this->headScript()->appendFile('/js/regeneracao-save.js', 'text/javascript');
+
+$form = $this->form;
+$form->get('titulo')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Digite o título aqui'
+]);
+
+$form->get('safra')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Digite a safra aqui'
+]);
+
+$form->get('casaVegetacao')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Digite a casa de vegetação aqui'
+]);
+
+$form->get('diasLuz')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Digite os dias de luz aqui'
+]);
+
+$form->get('nomeArquivo')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Salve a regeneração para habilitar o upload do arquivo'
+]);
+
+$form->get('submit')->setAttributes([
+    'class' => 'btn btn-primary'
+]);
+?>
+
+<h1>Cadastro de regeneração</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading clearfix">
+                <h3 class="panel-title">
+                    Por favor, preencha o formulário abaixo e, em seguida, clique sobre o botão <i>Salvar</i>. <a
+                        class="btn btn-secondary btn-sm pull-right"
+                        href="/bag/regeneracao" title="Fechar"><span
+                            class="glyphicon glyphicon-remove"></span></a>
+                </h3>
+            </div>
+
+            <div class="panel-body">
+                <?php echo $this->form()->openTag($form); ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->formLabel($form->get('titulo')); ?><br>
+                        <?php echo $this->formElement($form->get('titulo')); ?>
+                        <?php echo $this->formElementErrors($form->get('titulo')); ?>                  
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('motivo')); ?><br>
+                        <?php echo $this->formElement($form->get('motivo')); ?>
+                        <?php echo $this->formElementErrors($form->get('motivo')); ?>
+                    </div>
+
+                    <div class="col-md-1">
+                        <?php echo $this->formLabel($form->get('safra')); ?><br>
+                        <?php echo $this->formElement($form->get('safra')); ?>
+                        <?php echo $this->formElementErrors($form->get('safra')); ?>                  
+                    </div>
+
+
+                    <div class="col-md-1">
+                        <?php echo $this->formLabel($form->get('diasLuz')); ?><br>
+                        <?php echo $this->formElement($form->get('diasLuz')); ?>
+                        <?php echo $this->formElementErrors($form->get('diasLuz')); ?>                  
+                    </div>
+
+                    <div class="col-md-2">
+                        <?php echo $this->formLabel($form->get('casaVegetacao')); ?><br>
+                        <?php echo $this->formElement($form->get('casaVegetacao')); ?>
+                        <?php echo $this->formElementErrors($form->get('casaVegetacao')); ?>                  
+                    </div>
+
+                    <div class="col-md-5">
+                        <?php echo $this->formLabel($form->get('nomeArquivo')); ?><br>
+                        <?php echo $this->formElement($form->get('nomeArquivo')); ?>
+                        <?php echo $this->formElementErrors($form->get('nomeArquivo')); ?>   
+                    </div>
+                    <div class="col-md-1">
+                        <?php
+                        if (!empty($this->regeneracao)):
+                            echo $this->formLabel($form->get('fileUpload'));
+                            ?><br>
+                            <input type="hidden" id="idRegeneracao" value="<?php echo $this->regeneracao->id ?>">
+                            <button id="uploadArquivo" class="btn btn-primary btn-sm" title="Anexar arquivo..."><span class="glyphicon glyphicon-file"></span></button>
+                            <?php echo $this->formElement($form->get('fileUpload')); ?>
+                            <?php
+                            echo $this->formElementErrors($form->get('fileUpload'));
+                        endif;
+                        ?>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Descritores</h3>
+                            </div>
+                            <div class="panel-body" id="gridCaracteristica">
+
+                            </div>
+                            <?php
+                            if (!empty($this->regeneracao)):
+                                $id = $this->regeneracao->getId();
+                                ?>
+                                <script>
+                                    $(document).ready(function () {
+                                        refreshGridCaracteristica('<?php echo $id; ?>');
+                                    });
+                                </script>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Colunas, conforme a planilha de importação</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaCgs')); ?><br>
+                                    <?php echo $this->formElement($form->get('colunaCgs')); ?>
+                                    <?php echo $this->formElementErrors($form->get('colunaCgs')); ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaAcesso')); ?><br>
+                                    <?php echo $this->formElement($form->get('colunaAcesso')); ?>
+                                    <?php echo $this->formElementErrors($form->get('colunaAcesso')); ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaLocalizacao')); ?><br>
+                                    <?php echo $this->formElement($form->get('colunaLocalizacao')); ?>
+                                    <?php echo $this->formElementErrors($form->get('colunaLocalizacao')); ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaSinonimia')); ?><br>
+                                    <?php echo $this->formElement($form->get('colunaSinonimia')); ?>
+                                    <?php echo $this->formElementErrors($form->get('colunaSinonimia')); ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaSinonimia II')); ?><br>
+                                    <?php
+                                    echo $this->formElement($form->get('colunaSinonimia II'));
+                                    echo $this->formElementErrors($form->get('colunaSinonimia II'));
+                                    ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaSinonimia III')); ?><br>
+                                    <?php
+                                    echo $this->formElement($form->get('colunaSinonimia III'));
+                                    echo $this->formElementErrors($form->get('colunaSinonimia III'));
+                                    ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaOrigem')); ?><br>
+                                    <?php echo $this->formElement($form->get('colunaOrigem')); ?>
+                                    <?php echo $this->formElementErrors($form->get('colunaOrigem')); ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaEstaca')); ?><br>
+                                    <?php echo $this->formElement($form->get('colunaEstaca')); ?>
+                                    <?php echo $this->formElementErrors($form->get('colunaEstaca')); ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaDataPlantio')); ?><br>
+                                    <?php echo $this->formElement($form->get('colunaDataPlantio')); ?>
+                                    <?php echo $this->formElementErrors($form->get('colunaDataPlantio')); ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaQuantidade')); ?><br>
+                                    <?php echo $this->formElement($form->get('colunaQuantidade')); ?>
+                                    <?php echo $this->formElementErrors($form->get('colunaQuantidade')); ?>   
+                                </div>
+                                <div class="col-md-2">
+                                    <?php echo $this->formLabel($form->get('colunaAcoes')); ?><br>
+                                    <?php echo $this->formElement($form->get('colunaAcoes')); ?>
+                                    <?php echo $this->formElementErrors($form->get('colunaAcoes')); ?>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Materiais</h3>
+                            </div>
+                            <div class="panel-body" id="gridItem">
+                            </div>
+                            <?php
+                            if (!empty($this->regeneracao)):
+                                $id = $this->regeneracao->getId();
+                                ?>
+                                <script>
+                                    $(document).ready(function () {
+                                        refreshGridItem('<?php echo $id; ?>');
+                                    });
+                                </script>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-2">
+                        <?php echo $this->formElement($form->get('submit')); ?>
+                    </div>
+                    <?php if (null != $regeneracao && $regeneracao->getStatus() == 1): ?>
+                        <div class="col-md-10 text-right">
+                            <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Numerar estacas" onclick="aplicarEstaca('<?php echo $regeneracao->getId(); ?>')">
+                                <span class="glyphicon glyphicon-tag"></span>
+                            </button>
+                            <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Encerrar o cadastro de materias..." onclick="encerrarCadastroMaterial('<?php echo $regeneracao->getId(); ?>')">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php echo $this->form()->closeTag(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="ItemModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Inclusão de material para regeneração</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="fncSalvarItem(this)">Salvar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="ExclusaoItemModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Exclusão</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="fncExcluirItem(this)">Sim</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Não</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="CaracteristicaModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Cadastro das características que serão analisadas na regeneração</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" onclick="fncSalvarCaracteristica(this)">Salvar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade " id="ExclusaoCaracteristicaModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Exclusão</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="fncExcluirCaracteristica(this)">Sim</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal">Não</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade " id="EncerrarModal" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Encerrar cadastro de materiais da regeneração</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="fncEncerrarCadastroMaterial(this)">Sim</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Não</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

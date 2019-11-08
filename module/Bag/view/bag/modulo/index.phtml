@@ -1,0 +1,43 @@
+<h1>Módulos cadastrados</h1>
+<div class="row">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Número do módulo</th>
+                <th>Lado(s)</th>
+                <th>Faces</th>
+                <th>Níveis</th>
+                <th>Posições</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            $lados = [1 => "Direito e esquerdo", 2 => "Direito", 3 => "Esquerdo"];
+            foreach ($this->modulos as $modulo): ?>
+                <tr>
+                    <td><?php echo $this->escapeHtml($modulo->getNumero()); ?></td>
+                    <td><?php echo $this->escapeHtml($lados[$modulo->getLados()]); ?></td>
+                    <td><?php echo $this->escapeHtml($modulo->getFaces()); ?></td>
+                    <td><?php echo $this->escapeHtml($modulo->getNiveis()); ?></td>
+                    <td><?php echo $this->escapeHtml($modulo->getEspacos()); ?></td>
+                    <td><a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/modulo', ['action' => 'save', 'id' => $modulo->getId()]) ?>"
+                           title="Editar registro."><span class="glyphicon glyphicon-pencil"></span></a>
+                        <a class="btn btn-primary btn-sm pull-center"
+                           href="<?php echo $this->url('bag/modulo', ['action' => 'delete', 'id' => $modulo->getId()]) ?>"
+                           title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <span class="pull-right">
+        <?php echo $this->paginationControl($this->modulos, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/modulo']); ?>
+    </span>
+</div>
+
+<div class="row">
+    <a class="btn btn-primary pull-left" href="/bag/modulo/save">Novo registro</a>
+</div>
+

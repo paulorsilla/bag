@@ -1,0 +1,11 @@
+<?php 
+    $this->headScript()->appendFile('/js/inputmask.js', 'text/javascript'); 
+?>
+
+<script type="text/javascript">
+    var SerialPort = require("/home/silla/workspace/Bag/node_modules/browser-serialport").SerialPort;
+    var serialPort = new SerialPort("/dev/ttyS0", {
+      baudrate: 57600
+    });
+    
+</script>
