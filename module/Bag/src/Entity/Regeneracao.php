@@ -135,6 +135,10 @@ class Regeneracao extends AbstractEntity {
         return $this->safra;
     }
         
+    public function getNomeArquivo() {
+        return $this->nomeArquivo;
+    }
+    
     public function setId($id) {
         $this->id = $id;
     }
@@ -177,6 +181,10 @@ class Regeneracao extends AbstractEntity {
 
     public function setSafra($safra) {
         $this->safra = $safra;
+    }
+    
+    public function setNomeArquivo($nomeArquivo) {
+        $this->nomeArquivo = $nomeArquivo;
     }
 
 }
