@@ -153,14 +153,15 @@
         });
     } 
     
-    function aplicarEstaca(regeneracaoId)
+    function fcnImportar(id)
     {
         $.ajax({
            type: "POST",
-           url: "/bag/regeneracao/aplicar-estaca",
-           data: {regeneracaoId:regeneracaoId},
+           url: "/bag/regeneracao/importar",
+           data: {regeneracaoId:id},
            success: function(d) {
-               refreshGridItem(regeneracaoId);
+               alert("Sucesso");
+//               refreshGridItem(regeneracaoId);
            }
         });
     }

@@ -265,7 +265,27 @@ class RegeneracaoController extends AbstractActionController
             fclose($conteudo);
         }
         return $modelJson;
-    }    
+    }
+    
+    public function importarAction() 
+    {
+        //implementar o carregamento dos dados do arquivo para o banco//
+        $modelJson = new JsonModel();
+        if ($this->getRequest()->isPost()) {
+            $repo = $this->entityManager->getRepository(Regeneracao::class);
+        
+            $id = $this->params()->fromPost('regeneracaoId', null);
+            $regeneracao = $repo->find($id);
+            if ($regeneracao) {
+                $nomeArquivo = $regeneracao->getNomeArquivo();
+                $conteudo = fopen("/home/aplicacoes/bagarquivos/cadernetas/".$nomeArquivo, "r");
+                if ($conteudo) {
+                    $modelJson->setVariable('success', 1);
+                }
+            }
+        }
+        return $modelJson;
+    }
 
     
     

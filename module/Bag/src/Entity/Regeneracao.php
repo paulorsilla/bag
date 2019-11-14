@@ -183,6 +183,7 @@ class Regeneracao extends AbstractEntity {
         $this->safra = $safra;
     }
     
+    teste123
     public function setNomeArquivo($nomeArquivo) {
         $this->nomeArquivo = $nomeArquivo;
     }

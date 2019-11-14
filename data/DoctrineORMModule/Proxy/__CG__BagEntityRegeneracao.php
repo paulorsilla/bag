@@ -83,10 +83,10 @@ class Regeneracao extends \Bag\Entity\Regeneracao implements \Doctrine\ORM\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'titulo', 'dataPlantio', 'motivos', 'status', 'itens', 'responsavel', 'caracteristicas', 'casaVegetacao', 'diasLuz', 'safra'];
+            return ['__isInitialized__', 'id', 'titulo', 'dataPlantio', 'motivos', 'status', 'itens', 'responsavel', 'caracteristicas', 'casaVegetacao', 'diasLuz', 'safra', 'nomeArquivo'];
         }
 
-        return ['__isInitialized__', 'id', 'titulo', 'dataPlantio', 'motivos', 'status', 'itens', 'responsavel', 'caracteristicas', 'casaVegetacao', 'diasLuz', 'safra'];
+        return ['__isInitialized__', 'id', 'titulo', 'dataPlantio', 'motivos', 'status', 'itens', 'responsavel', 'caracteristicas', 'casaVegetacao', 'diasLuz', 'safra', 'nomeArquivo'];
     }
 
     /**
@@ -320,6 +320,17 @@ class Regeneracao extends \Bag\Entity\Regeneracao implements \Doctrine\ORM\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getNomeArquivo()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getNomeArquivo', []);
+
+        return parent::getNomeArquivo();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function setId($id)
     {
 
@@ -436,6 +447,17 @@ class Regeneracao extends \Bag\Entity\Regeneracao implements \Doctrine\ORM\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setSafra', [$safra]);
 
         return parent::setSafra($safra);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setNomeArquivo($nomeArquivo)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setNomeArquivo', [$nomeArquivo]);
+
+        return parent::setNomeArquivo($nomeArquivo);
     }
 
     /**
