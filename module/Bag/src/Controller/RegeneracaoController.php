@@ -286,7 +286,5 @@ class RegeneracaoController extends AbstractActionController
         }
         return $modelJson;
     }
-
-    
     
 }
