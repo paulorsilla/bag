@@ -95,7 +95,7 @@ class AvaliacaoForm extends Form {
                 'multiple' => true
             ],
             'options' => [
-                'label' => 'Características disponíveis',
+                'label' => 'Descritores avaliados',
                 'object_manager' => $this->getObjectManager(),
                 'target_class' => \Bag\Entity\Caracteristica::class,
                 'property' => 'nomeCurto',

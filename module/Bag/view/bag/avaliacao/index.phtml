@@ -1,4 +1,4 @@
-<h1>Coletas cadastradas</h1>
+<h1>Avaliações cadastradas</h1>
 <div class="panel panel-default">
     <div class="panel-heading clearfix">
         <h3 class="panel-title">
@@ -20,18 +20,18 @@
             </thead>
             <tbody>
                 <?php 
-                foreach ($this->coletas as $coleta): ?>
+                foreach ($this->avaliacoes as $avaliacao): ?>
                     <tr>
-                        <td><?php echo $this->escapeHtml($coleta->getDataColeta()->format("d/m/Y")); ?></td>
-                        <td><?php echo $this->escapeHtml($coleta->getResponsavel()->getNome()); ?></td>
-                        <td><?php foreach($coleta->getCaracteristicas() as $caracteristica):
+                        <td><?php echo $this->escapeHtml($avaliacao->getDataAvaliacao()->format("d/m/Y")); ?></td>
+                        <td><?php echo $this->escapeHtml($avaliacao->getResponsavel()->getNome()); ?></td>
+                        <td><?php foreach($avaliacao->getCaracteristicas() as $caracteristica):
                             echo $this->escapeHtml($caracteristica->getDescricao()."-".$caracteristica->getNomeCurto())."<br>";
                         endforeach; ?></td>
                         <td><a class="btn btn-primary btn-sm pull-center"
-                               href="<?php echo $this->url('bag/coleta', ['action' => 'collect', 'id' => $coleta->getId()]) ?>"
-                               title="Coletar dados."><span class="glyphicon glyphicon-phone"></span></a>
+                               href="<?php echo $this->url('bag/avaliacao', ['action' => 'evaluate', 'id' => $avaliacao->getId()]) ?>"
+                               title="Avaliar descritores."><span class="glyphicon glyphicon-phone"></span></a>
                             <a class="btn btn-primary btn-sm pull-center"
-                               href="<?php echo $this->url('bag/coleta', ['action' => 'delete', 'id' => $coleta->getId()]) ?>"
+                               href="<?php echo $this->url('bag/avaliacao', ['action' => 'delete', 'id' => $avaliacao->getId()]) ?>"
                                title="Excluir registro."><span class="glyphicon glyphicon-remove"></span></a>
                         </td>
                     </tr>
@@ -44,14 +44,14 @@
 <div class="row">
     <div class="col-xs-11">
         <span class="pull-right">
-            <?php echo $this->paginationControl($this->coletas, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/coleta']); ?>
+            <?php echo $this->paginationControl($this->avaliacoes, 'Elastic', 'bag/partial/paginator', ['route' => 'bag/avaliacao']); ?>
         </span>
     </div>
 </div>
 
 <div class="row">
     <div class="col-xs-11">
-        <a class="btn btn-primary pull-left" href=<?php echo $this->url('bag/coleta', ['action' => 'save', 'id' => 0, 'idRegeneracao' => $this->regeneracao->getId()]); ?>>Novo registro</a>
+        <a class="btn btn-primary pull-left" href=<?php echo $this->url('bag/avaliacao', ['action' => 'save', 'id' => 0, 'idRegeneracao' => $this->regeneracao->getId()]); ?>>Novo registro</a>
     </div>
 </div>
 

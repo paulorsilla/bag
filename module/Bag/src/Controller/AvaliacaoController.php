@@ -7,9 +7,10 @@ use Bag\Form\AvaliacaoForm;
 use Zend\View\Model\ViewModel;
 use Bag\Entity\Avaliacao;
 use Bag\Entity\ItemAvaliacao;
+use Bag\Entity\ItemRegeneracao;
+use Bag\Entity\MaterialCaracteristica;
 use Bag\Entity\Regeneracao;
 use Zend\View\Model\JsonModel;
-use Bag\Repository\MaterialCaracteristica;
 
 class AvaliacaoController extends AbstractActionController
 {
@@ -142,6 +143,51 @@ class AvaliacaoController extends AbstractActionController
                 'avaliacao' => $avaliacao,
             ]);
 	}
+        
+        public function evaluateAction() 
+        {
+            $id = (int) $this->params()->fromRoute('id', 0);
+            if (!$id) {
+                return $this->redirect()->toRoute('bag/avaliacao');
+            }
+            
+            $repo = $this->entityManager->getRepository(Avaliacao::class);
+            $avaliacao = $repo->find($id);
+           
+            if ($this->getRequest()->isGet()) {
+                $estaca = $this->params()->fromQuery('estaca');
+                if($estaca != '') {
+                    $repoItemRegeneracao = $this->entityManager->getRepository(ItemRegeneracao::class);
+                    $repoMaterialCaracteristica = $this->entityManager->getRepository(MaterialCaracteristica::class);
+                    $itensRegeneracao = $repoItemRegeneracao->getQuery(['regeneracao' => $avaliacao->getRegeneracao()->getId(), 'estaca' => $estaca]);
+                    $itensMaterialCaracteristica = [];
+                    foreach($itensRegeneracao as $itemRegeneracao) {
+                        if ( null != $itemRegeneracao->getMaterial() ) {
+                            $materialId = $itemRegeneracao->getMaterial()->getId();
+                            foreach($itemRegeneracao->getItensAvaliacao()  as $itemAvaliacao) {
+                                if ($avaliacao->getCaracteristicas()->contains($itemAvaliacao->getCaracteristica()) ) {
+                                    $caracteristicaId = $itemAvaliacao->getCaracteristica()->getId();
+                                    $materialCaracteristica = $repoMaterialCaracteristica->findOneBy(['material' => $materialId, 'caracteristica' => $caracteristicaId]);
+                                    if($materialCaracteristica) {
+                                        $itensMaterialCaracteristica[$materialId."-".$caracteristicaId] = $materialCaracteristica->getValor();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                } else {
+                    $estaca = null;
+                    $itensRegeneracao = null;
+                }
+            }
+            return new ViewModel([
+               'avaliacao' => $avaliacao,
+                'itensRegeneracao' => $itensRegeneracao,
+                'estaca' => $estaca,
+                'materialCaracteristica' => $itensMaterialCaracteristica
+            ]);
+        }
         
         public function collectAction()
         {

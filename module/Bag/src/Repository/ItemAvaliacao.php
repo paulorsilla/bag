@@ -11,9 +11,13 @@ class ItemAvaliacao extends AbstractRepository {
     public function getQuery($search = []) {
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('i')
-            ->from(ItemAvaliacaoEntity::class, 'i')
-            ->where('i.avaliacao = :avaliacao')
-            ->setParameter('avaliacao', $search['avaliacao']);
+            ->from(ItemAvaliacaoEntity::class, 'i');
+
+        if (isset($search['avaliacao'])) {
+            $qb->where('i.avaliacao = :avaliacao');
+            $qb->setParameter('avaliacao', $search['avaliacao']);
+        }
+        
         return $qb->getQuery()->getResult();
     }
     

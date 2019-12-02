@@ -11,7 +11,7 @@ class Avaliacao extends AbstractRepository {
 
     public function getQuery($search = []) {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('c')
+        $qb->select('a')
                 ->from(AvaliacaoEntity::class, 'a')
                 ->orderby('a.dataAvaliacao','ASC');
         

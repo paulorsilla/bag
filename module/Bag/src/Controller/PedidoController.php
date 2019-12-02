@@ -165,7 +165,7 @@ class PedidoController extends AbstractActionController
             $this->layout ()->setTemplate ( "layout/layout-relatorio" )->setVariable ( "titulo_impressao", "Saída de Sementes" );
             $repoItem = $this->entityManager->getRepository(ItemPedido::class);
             $itens = $repoItem->getQuery(['pedido' => $pedido->getId()]);
-            $instituicao = $this->entityManager->find(Instituicao::class, $pedido->getInstituicao());
+            $instituicao = (null != $pedido->getInstituicao()) ? $this->entityManager->find(Instituicao::class, $pedido->getInstituicao()) : null;
             
             return new ViewModel([
                 'pedido' => $pedido,

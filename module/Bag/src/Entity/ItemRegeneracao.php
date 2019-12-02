@@ -57,6 +57,11 @@ class ItemRegeneracao extends AbstractEntity {
     protected $acoes;
     
     /**
+     * @ORM\OneToMany(targetEntity="ItemAvaliacao", mappedBy="itemRegeneracao")
+     */
+    protected $itensAvaliacao;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Programa")
      * @ORM\JoinColumn(name="programa_provisorio_id", referencedColumnName="id")
     */
@@ -70,6 +75,7 @@ class ItemRegeneracao extends AbstractEntity {
     
     public function __construct() {
         $this->acoes = new ArrayCollection();
+        $this->itensAvaliacao = new ArrayCollection();
     }
     
     public function getId() {
@@ -102,6 +108,10 @@ class ItemRegeneracao extends AbstractEntity {
 
     public function getAcoes() {
         return $this->acoes;
+    }
+    
+    public function getItensAvaliacao() {
+        return $this->itensAvaliacao;
     }
 
     public function getProgramaProvisorio() {
@@ -142,6 +152,10 @@ class ItemRegeneracao extends AbstractEntity {
 
     public function setAcoes($acoes) {
         $this->acoes = $acoes;
+    }
+    
+    public function setItensAvaliacao($itensAvaliacao) {
+        $this->itensAvaliacao = $itensAvaliacao;
     }
 
     public function setProgramaProvisorio($programaProvisorio) {

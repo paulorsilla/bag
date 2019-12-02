@@ -6,6 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Bag\Form\RegeneracaoForm;
 use Zend\View\Model\ViewModel;
 use Bag\Entity\Regeneracao;
+use Bag\Entity\ItemRegeneracao;
 use Bag\Entity\Caracteristica;
 use Bag\Entity\RegeneracaoCaracteristica;
 use Zend\View\Model\JsonModel;
@@ -154,29 +155,29 @@ class RegeneracaoController extends AbstractActionController
         return $view->setTerminal(true);
     }
     
-    public function aplicarEstacaAction()
-    {
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $id = $this->params()->fromPost('regeneracaoId');
-            $regeneracao = $this->entityManager->find(Regeneracao::class, $id);
-            if($regeneracao) {
-                $estacaInicial = explode("-",  $regeneracao->getEstacaInicial());
-                $prefixo = $estacaInicial[0];
-                $sequencia = (int) $estacaInicial[1];
-                foreach($regeneracao->getItens() as $item) {
-                    $estacaAtual = $prefixo."-".str_pad($sequencia, 5, 0, STR_PAD_LEFT);
-                    $sequencia += 1;
-                    $item->setEstaca($estacaAtual);
-                    $this->entityManager->persist($item);
-                }
-                $this->entityManager->flush();
-            }
-            $modelJson = new \Zend\View\Model\JsonModel();
-            $modelJson->setVariable('success', 1);
-            return $modelJson;
-        }
-    }
+//    public function aplicarEstacaAction()
+//    {
+//        $request = $this->getRequest();
+//        if ($request->isPost()) {
+//            $id = $this->params()->fromPost('regeneracaoId');
+//            $regeneracao = $this->entityManager->find(Regeneracao::class, $id);
+//            if($regeneracao) {
+//                $estacaInicial = explode("-",  $regeneracao->getEstacaInicial());
+//                $prefixo = $estacaInicial[0];
+//                $sequencia = (int) $estacaInicial[1];
+//                foreach($regeneracao->getItens() as $item) {
+//                    $estacaAtual = $prefixo."-".str_pad($sequencia, 5, 0, STR_PAD_LEFT);
+//                    $sequencia += 1;
+//                    $item->setEstaca($estacaAtual);
+//                    $this->entityManager->persist($item);
+//                }
+//                $this->entityManager->flush();
+//            }
+//            $modelJson = new \Zend\View\Model\JsonModel();
+//            $modelJson->setVariable('success', 1);
+//            return $modelJson;
+//        }
+//    }
     
     public function updateAction()
     {
@@ -273,18 +274,40 @@ class RegeneracaoController extends AbstractActionController
         $modelJson = new JsonModel();
         if ($this->getRequest()->isPost()) {
             $repo = $this->entityManager->getRepository(Regeneracao::class);
+            $repoItem = $this->entityManager->getRepository(ItemRegeneracao::class);
         
             $id = $this->params()->fromPost('regeneracaoId', null);
+            $nomeArquivo = $this->params()->fromPost('nomeArquivo', null);
+            $colunaCgs = $this->params()->fromPost('colunaCgs', null);
+            $colunaOrigem = $this->params()->fromPost('colunaOrigem', null);
+            $colunaEstaca = $this->params()->fromPost('colunaEstaca', null);
             $regeneracao = $repo->find($id);
             if ($regeneracao) {
-                $nomeArquivo = $regeneracao->getNomeArquivo();
                 $conteudo = fopen("/home/aplicacoes/bagarquivos/cadernetas/".$nomeArquivo, "r");
                 if ($conteudo) {
+                    $linha = utf8_encode(trim(fgets($conteudo)));
+                    $contaLinha = 0;
+                    $dados = [];
+                    while (!feof($conteudo)) {
+                        $linha = utf8_encode(trim(fgets($conteudo)));
+                        $colunas = explode(";", $linha);
+
+                        if (count($colunas) > 1) {
+                            $dados[$contaLinha]['material'] = preg_replace('/"/', '', $colunas[$colunaCgs]);
+                            $dados[$contaLinha]['origem'] = preg_replace('/"/', '', $colunas[$colunaOrigem]);
+                            $dados[$contaLinha]['estaca'] = preg_replace('/"/', '', $colunas[$colunaEstaca]);
+                            $dados[$contaLinha]['quantidadePlantada'] = "V"; //ajustar
+                        }
+                        $contaLinha += 1;
+                    }
+                    $repoItem->incluir($dados, $regeneracao->getId());
                     $modelJson->setVariable('success', 1);
                 }
+                
+                fclose($conteudo);
             }
         }
         return $modelJson;
     }
-    
+  
 }

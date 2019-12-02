@@ -1,0 +1,54 @@
+<h1>Avaliação</h1>
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title">
+            <b>Regeneração:</b> <?php echo $this->avaliacao->getRegeneracao()->getTitulo();?>
+
+            <a class="btn btn-secondary btn-sm pull-right"
+                href="/bag/avaliacao/index/<?php echo $this->avaliacao->getRegeneracao()->getId();?>" title="Fechar"><span
+                    class="glyphicon glyphicon-remove"></span></a>
+        </h3>
+        <div class="row">
+        </div>
+        <hr>
+        <form method="get" action="/bag/avaliacao/evaluate/<?php echo $this->avaliacao->getId(); ?>">
+        <div class="row">
+            <div class="col-xs-6"><input type="text" placeholder="Número da estaca" name="estaca" id="estaca" value="<?php echo $this->estaca;?>">
+            <button class="btn-primary btn-sm" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button></div>
+        </div>
+        </form>
+    </div>
+    <div class="panel-body">
+                
+        <?php foreach($this->itensRegeneracao as $itemRegeneracao):?>
+        
+        
+        <div class="row">
+            <div class="col-xs-2">
+                <label for="estaca_<?php echo $itemRegeneracao->getId();?>" class="label label-primary">Estaca</label>
+                <input type="text" class="form-control" name="estaca_<?php echo $itemRegeneracao->getId();?>" value="<?php echo $itemRegeneracao->getEstaca();?>">
+            </div>
+            <?php foreach($itemRegeneracao->getItensAvaliacao() as $itemAvaliacao):
+
+                if ($avaliacao->getCaracteristicas()->contains($itemAvaliacao->getCaracteristica()) ) {
+                    $valor = null;
+                    if (null != $itemRegeneracao->getMaterial()) {
+                        $materialId = $itemRegeneracao->getMaterial()->getId();
+                        $caracteristicaId = $itemAvaliacao->getCaracteristica()->getId();
+                        $valor = $this->materialCaracteristica[$materialId."-".$caracteristicaId];
+                    }
+
+                ?>
+                    <div class="col-xs-1">
+                        <label for="avaliacao_<?php echo $itemAvaliacao->getId();?>" class="label label-primary"><?php echo $itemAvaliacao->getCaracteristica()->getNomeCurto();?></label>
+                        <input type="text" class="form-control" name="avaliacao_<?php echo $itemAvaliacao->getId();?>" id="avaliacao_<?php echo $itemAvaliacao->getId();?>" value="<?php echo $valor;?>">
+                    </div>
+            <?php }
+            endforeach;?>
+        </div>
+        <hr>
+        <?php endforeach;?>
+        
+    </div>
+</div>
+
